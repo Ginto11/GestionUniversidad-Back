@@ -66,19 +66,19 @@ Es una aplicación backend diseñada para facilitar la administración académic
     ```
 ---
 ## 📁 Estructura del proyecto
-
+```plaintext
 `📁 GestionUniversidad/`
 │
 ├── `📁 Authentication/`       → Controlador de Autenticacion
-├── `📁 Controllers/`         → Controladores REST
+├── `📁 Controllers/`          → Controladores REST
 ├── `📁 Db/`                   → Migraciones y contexto EF
-├── `📁 Dtos/`                → Objetos de transferencia de datos
-├── `📁 Interfaces`           → Interfaz de servicio
-├── `📁 Models/`              → Modelos de entidad
-├── `📁 Services/`            → Lógica de negocio
-├── `📁 Utilies/`        → Acceso a datos y procedimientos almacenados
-└── `Program.cs`           → Configuración de la app
-
+├── `📁 Dtos/`                 → Objetos de transferencia de datos
+├── `📁 Interfaces`            → Interfaz de servicio
+├── `📁 Models/`               → Modelos de entidad
+├── `📁 Services/`             → Lógica de negocio
+├── `📁 Utilies/`              → Acceso a datos y procedimientos almacenados
+└── `Program.cs`               → Configuración de la app
+```
 ---
 
 ## 🔁 Endpoints
