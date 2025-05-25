@@ -3,8 +3,6 @@
 
 Es una aplicación backend diseñada para facilitar la administración académica de una universidad. Permite registrar y gestionar estudiantes, docentes, materias, y realizar el proceso completo de matrícula de forma eficiente mediante una API RESTful robusta y segura.
 
----
-
 ## 🛠️ Tecnologías y Herramientas utilizadas
 
 - ✅ [.NET 8 (ASP.NET Core)](https://learn.microsoft.com/en-us/aspnet/core/introduction-to-aspnet-core)
@@ -15,14 +13,12 @@ Es una aplicación backend diseñada para facilitar la administración académic
 - ✅ Autenticación y autorización con JWT
 - ✅ Encriptación de contraseñas.
 
----
 
 ## 🔥 Requisitos del sistema
 
 - .NET 8 SDK
 - Visual Studio 2022 o superior
 - SQL Server 2019 o superior
----
 
 ## 🧩 Funcionalidades principales
 
@@ -33,8 +29,6 @@ Es una aplicación backend diseñada para facilitar la administración académic
 - 🔹 **Validaciones**: uso de anotaciones de datos y lógica de negocio para garantizar integridad.
 - 🔹 **Procedimientos almacenados**: para operaciones críticas y cálculo de costos o promociones.
 - 🔹 **Documentación Swagger UI**: explora todos los endpoints desde el navegador.
-
----
 
 ## 🚀 Instalación y ejecución local
 
@@ -64,7 +58,6 @@ Es una aplicación backend diseñada para facilitar la administración académic
     ```bash
     http://localhost:<puerto>/swagger
     ```
----
 ## 📁 Estructura del proyecto
 ```plaintext
 `📁 GestionUniversidad/`
@@ -79,7 +72,6 @@ Es una aplicación backend diseñada para facilitar la administración académic
 ├── `📁 Utilies/`              → Acceso a datos y procedimientos almacenados
 └── `Program.cs`               → Configuración de la app
 ```
----
 
 ## 🔁 Endpoints
 Una tabla o lista de algunos recursos de la aplicación:
@@ -91,7 +83,7 @@ Una tabla o lista de algunos recursos de la aplicación:
 | Login    | POST    | `/api/login...`                | Dos metodos que permiten loguearse            |
 | Materias    | GET   | `/api/materias`              | Lista todas las materias   |
 | Matrículas  | POST   | `/api/matriculas`            | Genera una matrícula                 |
----
+
 
 ## 🔄 Migraciones EF
 
@@ -115,14 +107,12 @@ dotnet ef database update
 - Protección contra inyecciones SQL y validación de datos en todos los endpoints.
 - Encriptación de contraseñas.
 
----
 ## 📌 Pruebas
 
 - Usa Insomnia o Postman para probar los endpoints.
 
 - Swagger UI te permite probar directamente desde el navegador.
 
----
 
 ## 💻 Proximas actualizacines
 - [ ] Desarrollar el Front-End en Angular
