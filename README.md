@@ -34,7 +34,7 @@ Es una aplicación backend diseñada para facilitar la administración académic
 
 1. Clona el repositorio:
    ```bash
-   git clone https://github.com/tu-usuario/gestion-universidad.git
+   git clone https://github.com/tu-usuario/GestionUniversidad.git
    ```
 2. Abre el proyecto con Visual Studio 2022.
 3. Configura la cadena de conexión en appsettings.Development.json (no subir al repo):
@@ -56,21 +56,21 @@ Es una aplicación backend diseñada para facilitar la administración académic
 
  
     ```bash
-    http://localhost:<puerto>/swagger
+    http://localhost:<puerto>/swagger/index.html
     ```
 ## 📁 Estructura del proyecto
 ```plaintext
 `📁 GestionUniversidad/`
 │
-├── `📁 Authentication/`       → Controlador de Autenticacion
-├── `📁 Controllers/`          → Controladores REST
-├── `📁 Db/`                   → Migraciones y contexto EF
-├── `📁 Dtos/`                 → Objetos de transferencia de datos
-├── `📁 Interfaces`            → Interfaz de servicio
-├── `📁 Models/`               → Modelos de entidad
-├── `📁 Services/`             → Lógica de negocio
-├── `📁 Utilies/`              → Acceso a datos y procedimientos almacenados
-└── `Program.cs`               → Configuración de la app
+├── 📁 Authentication/       → Controlador de Autenticacion
+├── 📁 Controllers/          → Controladores REST
+├── 📁 Db/                   → Migraciones y contexto EF
+├── 📁 Dtos/                 → Objetos de transferencia de datos
+├── 📁 Interfaces            → Interfaz de servicio
+├── 📁 Models/               → Modelos de entidad
+├── 📁 Services/             → Lógica de negocio
+├── 📁 Utilies/              → Acceso a datos y procedimientos almacenados
+└── Program.cs               → Configuración de la app
 ```
 
 ## 🔁 Endpoints
