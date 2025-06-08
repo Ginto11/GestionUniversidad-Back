@@ -33,9 +33,6 @@ namespace GestionUniversidad.Db
 
         public DbSet<Programa> Programa { get; set; }
 
-        public DbSet<GetDocenteDto> DocenteDto { get; set; }
-
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
@@ -44,7 +41,7 @@ namespace GestionUniversidad.Db
                 .IsUnique();
 
             modelBuilder.Entity<Estudiante>()
-                .HasIndex(estudiante => estudiante.cedula)
+                .HasIndex(estudiante => estudiante.Cedula)
                 .IsUnique();
 
             modelBuilder.Entity<Matricula>()

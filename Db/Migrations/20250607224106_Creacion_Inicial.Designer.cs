@@ -4,6 +4,7 @@ using GestionUniversidad.Db;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GestionUniversidad.Db.Migrations
 {
     [DbContext(typeof(Database))]
-    partial class DbModelSnapshot : ModelSnapshot
+    [Migration("20250607224106_Creacion_Inicial")]
+    partial class Creacion_Inicial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -139,6 +142,10 @@ namespace GestionUniversidad.Db.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasColumnName("apellido");
 
+                    b.Property<int>("Cedula")
+                        .HasColumnType("int")
+                        .HasColumnName("cedula");
+
                     b.Property<string>("Contrasena")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -170,18 +177,14 @@ namespace GestionUniversidad.Db.Migrations
                         .HasColumnType("int")
                         .HasColumnName("id_rol");
 
-                    b.Property<int>("cedula")
-                        .HasColumnType("int")
-                        .HasColumnName("cedula");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("Cedula")
+                        .IsUnique();
 
                     b.HasIndex("GeneroId");
 
                     b.HasIndex("RolId");
-
-                    b.HasIndex("cedula")
-                        .IsUnique();
 
                     b.ToTable("estudiantes");
                 });
@@ -373,6 +376,8 @@ namespace GestionUniversidad.Db.Migrations
 
                     b.HasIndex("EstadoMatriculaId");
 
+                    b.HasIndex("EstudianteId");
+
                     b.ToTable("matriculas");
                 });
 
@@ -519,7 +524,15 @@ namespace GestionUniversidad.Db.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("GestionUniversidad.Models.Estudiante", "Estudiante")
+                        .WithMany()
+                        .HasForeignKey("EstudianteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("EstadoMatricula");
+
+                    b.Navigation("Estudiante");
                 });
 
             modelBuilder.Entity("GestionUniversidad.Models.Programa", b =>

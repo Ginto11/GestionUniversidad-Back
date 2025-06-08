@@ -42,7 +42,7 @@ namespace GestionUniversidad.Services
                     .Select(estudiante => new GetEstudianteDto
                     {
                         Id = estudiante.Id,
-                        Cedula = estudiante.cedula,
+                        Cedula = estudiante.Cedula,
                         Nombre = estudiante.Nombre,
                         Apellido = estudiante.Apellido,
                         Edad = estudiante.Edad,
@@ -126,7 +126,7 @@ namespace GestionUniversidad.Services
                     .Select(estudiante => new GetEstudianteDto
                     {
                         Id = estudiante.Id,
-                        Cedula = estudiante.cedula,
+                        Cedula = estudiante.Cedula,
                         Nombre = estudiante.Nombre,
                         Apellido = estudiante.Apellido,
                         Edad = estudiante.Edad,

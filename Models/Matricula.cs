@@ -10,10 +10,11 @@ namespace GestionUniversidad.Models
     {
         [Key]
         [Column("id_matricula")]
-        public int Id { get; set; }
+        public int Id { get; set; } 
 
         [Column("id_estudiante")]
         public required int EstudianteId { get; set; }
+
 
         [Column("semestre")]
         public required int Semestre { get; set; }
@@ -32,12 +33,13 @@ namespace GestionUniversidad.Models
         public decimal? CostoMatricula { get; set; }
 
         [JsonIgnore]
-        public Estudiante Estudiante { get; set; }
-
-        [JsonIgnore]
         public IEnumerable<InscribirMateria>? InscribirMateria { get; set; }
 
+        [JsonIgnore]
         public EstadoMatricula? EstadoMatricula { get; set; }
+
+        [JsonIgnore]
+        public Estudiante? Estudiante { get; set; }
     
     }
 }
