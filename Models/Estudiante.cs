@@ -11,7 +11,7 @@ namespace GestionUniversidad.Models
         public int Id { get; set; }
 
         [Column("cedula")]
-        public required int cedula { get; set; }
+        public required int Cedula { get; set; }
 
         [MaxLength(50)]
         [Column("nombre")]

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace GestionUniversidad.Db.Migrations
 {
     /// <inheritdoc />
-    public partial class CreacionTablas : Migration
+    public partial class Creacion_Inicial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -65,20 +65,16 @@ namespace GestionUniversidad.Db.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "matriculas",
+                name: "roles",
                 columns: table => new
                 {
-                    id_matricula = table.Column<int>(type: "int", nullable: false)
+                    id_rol = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    id_estudiante = table.Column<int>(type: "int", nullable: false),
-                    semestre = table.Column<int>(type: "int", nullable: false),
-                    fecha_matricula = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
-                    esta_paga = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
-                    costo_matricula = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false)
+                    nombre_rol = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_matriculas", x => x.id_matricula);
+                    table.PrimaryKey("PK_roles", x => x.id_rol);
                 });
 
             migrationBuilder.CreateTable(
@@ -90,16 +86,17 @@ namespace GestionUniversidad.Db.Migrations
                     nombre = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     descripcion = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
                     duracion = table.Column<byte>(type: "tinyint", nullable: false),
-                    FacultadId = table.Column<int>(type: "int", nullable: true)
+                    id_facultad = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_programas", x => x.id_programa);
                     table.ForeignKey(
-                        name: "FK_programas_facultades_FacultadId",
-                        column: x => x.FacultadId,
+                        name: "FK_programas_facultades_id_facultad",
+                        column: x => x.id_facultad,
                         principalTable: "facultades",
-                        principalColumn: "id_facultad");
+                        principalColumn: "id_facultad",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -112,18 +109,25 @@ namespace GestionUniversidad.Db.Migrations
                     nombre = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     apellido = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     edad = table.Column<int>(type: "int", nullable: false),
-                    genero = table.Column<int>(type: "int", maxLength: 10, nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    contrasena = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
+                    id_genero = table.Column<int>(type: "int", maxLength: 10, nullable: false),
+                    email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    contrasena = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    id_rol = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_docentes", x => x.id_docente);
                     table.ForeignKey(
-                        name: "FK_docentes_generos_genero",
-                        column: x => x.genero,
+                        name: "FK_docentes_generos_id_genero",
+                        column: x => x.id_genero,
                         principalTable: "generos",
                         principalColumn: "id_genero",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_docentes_roles_id_rol",
+                        column: x => x.id_rol,
+                        principalTable: "roles",
+                        principalColumn: "id_rol",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -137,18 +141,25 @@ namespace GestionUniversidad.Db.Migrations
                     nombre = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     apellido = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     edad = table.Column<int>(type: "int", nullable: false),
-                    genero = table.Column<int>(type: "int", maxLength: 10, nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    contrasena = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
+                    id_genero = table.Column<int>(type: "int", maxLength: 10, nullable: false),
+                    email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    contrasena = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    id_rol = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_estudiantes", x => x.id_estudiante);
                     table.ForeignKey(
-                        name: "FK_estudiantes_generos_genero",
-                        column: x => x.genero,
+                        name: "FK_estudiantes_generos_id_genero",
+                        column: x => x.id_genero,
                         principalTable: "generos",
                         principalColumn: "id_genero",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_estudiantes_roles_id_rol",
+                        column: x => x.id_rol,
+                        principalTable: "roles",
+                        principalColumn: "id_rol",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -159,13 +170,13 @@ namespace GestionUniversidad.Db.Migrations
                     id_materia = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     nombre = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    horas_estudio = table.Column<byte>(type: "tinyint", nullable: false),
-                    creditos = table.Column<byte>(type: "tinyint", nullable: false),
+                    horas_estudio = table.Column<int>(type: "int", nullable: true),
+                    creditos = table.Column<int>(type: "int", nullable: false),
                     valor_credito = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
-                    costo_total = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
+                    costo_total = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: true),
                     modalidad = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     descripcion = table.Column<string>(type: "nvarchar(800)", maxLength: 800, nullable: false),
-                    id_estado_materia = table.Column<int>(type: "int", nullable: false),
+                    id_estado_materia = table.Column<int>(type: "int", nullable: true),
                     id_docente = table.Column<int>(type: "int", nullable: false),
                     id_programa = table.Column<int>(type: "int", nullable: false)
                 },
@@ -182,13 +193,42 @@ namespace GestionUniversidad.Db.Migrations
                         name: "FK_materias_estado_materia_id_estado_materia",
                         column: x => x.id_estado_materia,
                         principalTable: "estado_materia",
-                        principalColumn: "id_estado_materia",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "id_estado_materia");
                     table.ForeignKey(
                         name: "FK_materias_programas_id_programa",
                         column: x => x.id_programa,
                         principalTable: "programas",
                         principalColumn: "id_programa",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "matriculas",
+                columns: table => new
+                {
+                    id_matricula = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    id_estudiante = table.Column<int>(type: "int", nullable: false),
+                    semestre = table.Column<int>(type: "int", nullable: false),
+                    fecha_matricula = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()"),
+                    estado_matricula = table.Column<int>(type: "int", nullable: false),
+                    esta_paga = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    costo_matricula = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_matriculas", x => x.id_matricula);
+                    table.ForeignKey(
+                        name: "FK_matriculas_estado_matricula_estado_matricula",
+                        column: x => x.estado_matricula,
+                        principalTable: "estado_matricula",
+                        principalColumn: "id_estado_matricula",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_matriculas_estudiantes_id_estudiante",
+                        column: x => x.id_estudiante,
+                        principalTable: "estudiantes",
+                        principalColumn: "id_estudiante",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -199,7 +239,7 @@ namespace GestionUniversidad.Db.Migrations
                     id_inscripcion = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     id_materia = table.Column<int>(type: "int", nullable: false),
-                    id_matricula = table.Column<int>(type: "int", nullable: false),
+                    id_matricula = table.Column<int>(type: "int", nullable: true),
                     costo_inscripcion = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false)
                 },
                 constraints: table =>
@@ -215,8 +255,7 @@ namespace GestionUniversidad.Db.Migrations
                         name: "FK_inscribir_materia_matriculas_id_matricula",
                         column: x => x.id_matricula,
                         principalTable: "matriculas",
-                        principalColumn: "id_matricula",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "id_matricula");
                 });
 
             migrationBuilder.CreateIndex(
@@ -226,38 +265,30 @@ namespace GestionUniversidad.Db.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_docentes_genero",
+                name: "IX_docentes_id_genero",
                 table: "docentes",
-                column: "genero");
+                column: "id_genero");
 
             migrationBuilder.CreateIndex(
-                name: "IX_estado_materia_nombre_estado",
-                table: "estado_materia",
-                column: "nombre_estado",
-                unique: true);
+                name: "IX_docentes_id_rol",
+                table: "docentes",
+                column: "id_rol");
 
             migrationBuilder.CreateIndex(
-                name: "IX_estado_matricula_nombre_estado",
-                table: "estado_matricula",
-                column: "nombre_estado",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_estudiantes_genero",
+                name: "IX_estudiantes_cedula",
                 table: "estudiantes",
-                column: "genero");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_facultades_nombre",
-                table: "facultades",
-                column: "nombre",
+                column: "cedula",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_generos_nombre_genero",
-                table: "generos",
-                column: "nombre_genero",
-                unique: true);
+                name: "IX_estudiantes_id_genero",
+                table: "estudiantes",
+                column: "id_genero");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_estudiantes_id_rol",
+                table: "estudiantes",
+                column: "id_rol");
 
             migrationBuilder.CreateIndex(
                 name: "IX_inscribir_materia_id_materia",
@@ -285,20 +316,24 @@ namespace GestionUniversidad.Db.Migrations
                 column: "id_programa");
 
             migrationBuilder.CreateIndex(
-                name: "IX_programas_FacultadId",
+                name: "IX_matriculas_estado_matricula",
+                table: "matriculas",
+                column: "estado_matricula");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_matriculas_id_estudiante",
+                table: "matriculas",
+                column: "id_estudiante");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_programas_id_facultad",
                 table: "programas",
-                column: "FacultadId");
+                column: "id_facultad");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "estado_matricula");
-
-            migrationBuilder.DropTable(
-                name: "estudiantes");
-
             migrationBuilder.DropTable(
                 name: "inscribir_materia");
 
@@ -318,10 +353,19 @@ namespace GestionUniversidad.Db.Migrations
                 name: "programas");
 
             migrationBuilder.DropTable(
-                name: "generos");
+                name: "estado_matricula");
+
+            migrationBuilder.DropTable(
+                name: "estudiantes");
 
             migrationBuilder.DropTable(
                 name: "facultades");
+
+            migrationBuilder.DropTable(
+                name: "generos");
+
+            migrationBuilder.DropTable(
+                name: "roles");
         }
     }
 }

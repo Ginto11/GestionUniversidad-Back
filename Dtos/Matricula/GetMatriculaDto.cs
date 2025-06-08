@@ -1,8 +1,4 @@
-﻿using GestionUniversidad.Models;
-using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GestionUniversidad.Dtos.Matricula
 {
@@ -22,13 +18,12 @@ namespace GestionUniversidad.Dtos.Matricula
         public required int Semestre { get; set; }
 
         public required DateTime FechaMatricula { get; set; }
-        
+
         public required string EstadoMatricula { get; set; }
 
         public required string EstadoPago { get; set; }
 
         public decimal? CostoMatricula { get; set; }
-
 
     }
 }

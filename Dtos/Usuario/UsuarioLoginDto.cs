@@ -9,7 +9,6 @@ namespace GestionUniversidad.Dtos.Usuario
         [EmailAddress]
         public required string Email { get; set; }
 
-        [MinLength(10, ErrorMessage = "La contraseña debe tener como minimo 10 caracteres.")]
         public required string Contrasena { get; set; }
 
 

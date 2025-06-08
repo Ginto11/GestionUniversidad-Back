@@ -76,14 +76,14 @@ namespace GestionUniversidad.Controllers
             {
                 var estudiante = new Estudiante
                 {
-                    cedula = estudianteDto.Cedula,
+                    Cedula = estudianteDto.Cedula,
                     Nombre = estudianteDto.Nombre,
                     Apellido = estudianteDto.Apellido,
                     Edad = estudianteDto.Edad,
                     Email = estudianteDto.Email,
                     Contrasena = utilidades.Encriptar(estudianteDto.Contrasena),
                     GeneroId = estudianteDto.GeneroId,
-                    RolId = estudianteDto.RolId
+                    RolId = 2
                 };
 
                 await estudianteService.Save(estudiante);
@@ -112,7 +112,7 @@ namespace GestionUniversidad.Controllers
                 if (estudiante == null)
                     return ManejoException.NotFound(id);
 
-                estudiante.cedula = estudianteDto.Cedula;
+                estudiante.Cedula = estudianteDto.Cedula;
                 estudiante.Nombre = estudianteDto.Nombre!;
                 estudiante.Apellido = estudianteDto.Apellido!;
                 estudiante.Edad = estudianteDto.Edad;

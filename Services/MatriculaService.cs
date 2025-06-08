@@ -1,12 +1,14 @@
 ﻿using GestionUniversidad.Db;
+using GestionUniversidad.Dtos.Materia;
 using GestionUniversidad.Dtos.Matricula;
 using GestionUniversidad.Interfaces;
 using GestionUniversidad.Models;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 namespace GestionUniversidad.Services
 {
-    public class MatriculaService : IService<Matricula, GetMatriculaDto>
+    public class MatriculaService : IServiceMatricula 
     {
 
         private readonly Database context;
@@ -16,26 +18,29 @@ namespace GestionUniversidad.Services
             this.context = context;
         }
 
+        public Task Cancel(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<IEnumerable<GetMatriculaDto>> FindAll()
         {
             try
             {
                 return await context.Matricula
-                    .Include(matricula => matricula.Estudiante)
-                    .Include(matricula => matricula.EstadoMatricula)
-                    .Select(matricula => new GetMatriculaDto
-                    {
-                        Id = matricula.Id,
-                        Cedula = matricula.Estudiante.cedula,
-                        Nombre = matricula.Estudiante.Nombre,
-                        Apellido = matricula.Estudiante.Apellido,
-                        Semestre = matricula.Semestre,
-                        Email = matricula.Estudiante.Email,
-                        EstadoMatricula = matricula.EstadoMatricula!.NombreEstado,
-                        FechaMatricula = matricula.FechaMatricula,
-                        CostoMatricula = matricula.CostoMatricula,
-                        EstadoPago = matricula.EstaPaga == false ? "No pagada." : "Pagada"
-                    }).ToListAsync();
+                   .Select(matricula => new GetMatriculaDto
+                   {
+                       Id = matricula.Id,
+                       Cedula = matricula.Estudiante!.Cedula,
+                       Nombre = matricula.Estudiante.Nombre,
+                       Apellido = matricula.Estudiante.Apellido,
+                       Semestre = matricula.Semestre,
+                       Email = matricula.Estudiante.Email,
+                       EstadoMatricula = matricula.EstadoMatricula!.NombreEstado,
+                       FechaMatricula = matricula.FechaMatricula,
+                       CostoMatricula = matricula.CostoMatricula,
+                       EstadoPago = matricula.EstaPaga == false ? "No pagada." : "Pagada"
+                   }).ToListAsync();
             }
             catch (Exception)
             {
@@ -43,28 +48,96 @@ namespace GestionUniversidad.Services
             }
         }
 
-        public Task<Matricula?> FindById(int id)
+        public async Task<IEnumerable<GetMatriculaDto>> FindAllByCC(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return await context.Matricula
+                   .Where(matricula =>  matricula.Estudiante!.Cedula == id)
+                   .Select(matricula => new GetMatriculaDto
+                   {
+                       Id = matricula.Id,
+                       Cedula = matricula.Estudiante!.Cedula,
+                       Nombre = matricula.Estudiante.Nombre,
+                       Apellido = matricula.Estudiante.Apellido,
+                       Semestre = matricula.Semestre,
+                       Email = matricula.Estudiante.Email,
+                       EstadoMatricula = matricula.EstadoMatricula!.NombreEstado,
+                       FechaMatricula = matricula.FechaMatricula,
+                       CostoMatricula = matricula.CostoMatricula,
+                       EstadoPago = matricula.EstaPaga == false ? "No pagada." : "Pagada"
+                   }).ToListAsync();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
-        public Task<GetMatriculaDto?> FindDtoById(int id)
+
+        public async Task<GetMatriculaDto?> FindDtoById(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return await context.Matricula
+                   .Where(matricula => matricula.Id == id)
+                   .Select(matricula => new GetMatriculaDto
+                   {
+                       Id = matricula.Id,
+                       Cedula = matricula.Estudiante!.Cedula,
+                       Nombre = matricula.Estudiante.Nombre,
+                       Apellido = matricula.Estudiante.Apellido,
+                       Semestre = matricula.Semestre,
+                       Email = matricula.Estudiante.Email,
+                       EstadoMatricula = matricula.EstadoMatricula!.NombreEstado,
+                       FechaMatricula = matricula.FechaMatricula,
+                       CostoMatricula = matricula.CostoMatricula,
+                       EstadoPago = matricula.EstaPaga == false ? "No pagada." : "Pagada"
+                   }).FirstOrDefaultAsync();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
-        public Task Save(Matricula entity)
+        public async Task<Matricula?> FindById(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return await context.Matricula.FirstOrDefaultAsync(matricula => matricula.Id == id);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
-        public Task Update(Matricula entity)
+        public async Task Pay(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                await context.Database.ExecuteSqlRawAsync("EXEC pagarMatricula @id_matricula;",
+                    new SqlParameter("@id_matricula", id));
+
+            }catch(SqlException){
+                throw;
+            }
         }
-        public Task Delete(Matricula entity)
+
+        public async Task Save(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                await context.Database.ExecuteSqlRawAsync("EXEC generandoMatricula @id_estudiante;",
+                    new SqlParameter("@id_estudiante", id));
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
+
+        
     }
 }
