@@ -29,7 +29,7 @@ namespace GestionUniversidad.Controllers
 
             }catch(Exception error)
             {
-                return ManejoException.ServerError(error.Message);
+                return ManejoRespuestas.ServerError(error.Message);
             }
         }
 
@@ -47,7 +47,7 @@ namespace GestionUniversidad.Controllers
 
             }catch(Exception error)
             {
-                return ManejoException.ServerError(error.Message);
+                return ManejoRespuestas.ServerError(error.Message);
             }
         }
 
@@ -61,7 +61,7 @@ namespace GestionUniversidad.Controllers
                 var matricula = await matriculaService.FindById(id);
 
                 if (matricula == null)
-                    return ManejoException.NotFound(id);
+                    return ManejoRespuestas.NotFound(id);
 
                 await matriculaService.Pay(id);
 
@@ -69,7 +69,7 @@ namespace GestionUniversidad.Controllers
 
             }catch(Exception error)
             {
-                return ManejoException.ServerError(error.Message);
+                return ManejoRespuestas.ServerError(error.Message);
             }
         }
 
@@ -83,14 +83,14 @@ namespace GestionUniversidad.Controllers
                 var matricula = await matriculaService.FindDtoById(id);
 
                 if (matricula == null)
-                    return ManejoException.NotFound(id);
+                    return ManejoRespuestas.NotFound(id);
 
                 return Ok(matricula);
 
             }
             catch (Exception error)
             {
-                return ManejoException.ServerError(error.Message);
+                return ManejoRespuestas.ServerError(error.Message);
             }
         }
 
@@ -116,7 +116,7 @@ namespace GestionUniversidad.Controllers
             }
             catch (Exception error)
             {
-                return ManejoException.ServerError(error.Message);
+                return ManejoRespuestas.ServerError(error.Message);
             }
         }
 

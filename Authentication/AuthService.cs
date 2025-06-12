@@ -11,7 +11,7 @@ namespace GestionUniversidad.Authentication
     {
         private readonly IConfiguration config;
         private readonly HttpContextAccessor  httpContextAccessor;
-        public AuthService(Database context, IConfiguration config, HttpContextAccessor httpContextAccessor)
+        public AuthService(IConfiguration config, HttpContextAccessor httpContextAccessor)
         {
             this.config = config;
             this.httpContextAccessor = httpContextAccessor;
@@ -28,7 +28,6 @@ namespace GestionUniversidad.Authentication
             {
                 new Claim("UsuarioId", id.ToString()),
                 new Claim(ClaimTypes.Name, nombreCompleto),
-                new Claim(ClaimTypes.Email, email),
                 new Claim(ClaimTypes.Role, rol)
             };
 
@@ -65,6 +64,112 @@ namespace GestionUniversidad.Authentication
             return null;
         }
 
+
+        public ClaimsPrincipal? RevisarToken(string token)
+        {
+            byte[] key = Encoding.UTF8.GetBytes(config["Jwt:Key"]!);
+            var manejadorToken = new JwtSecurityTokenHandler();
+
+            var parametrosToken = new TokenValidationParameters
+            {
+                ValidateAudience = false,
+                ValidateIssuer = false,
+                ValidateLifetime = true,
+                ClockSkew = TimeSpan.Zero,
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(key)
+            };
+
+            try
+            {
+                var principal = manejadorToken.ValidateToken(token, parametrosToken, out SecurityToken validatedToken);
+
+                var jwtToken = validatedToken as JwtSecurityToken;
+
+                if (jwtToken == null || jwtToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
+                    throw new SecurityTokenException("Token Valido");
+
+                return principal;
+                
+            }catch(Exception)
+            {
+                return null;
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        public ClaimsPrincipal? ValidarToken(string token)
+        {
+            byte[] bytesLlaveSecreta = Encoding.UTF8.GetBytes(config["Jwt:Key"]!);
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+
+            var validationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(bytesLlaveSecreta),
+
+                ValidateIssuer = false,
+                ValidateAudience = false, 
+
+                ValidateLifetime = true,
+                ClockSkew = TimeSpan.Zero 
+            };
+
+            try
+            {
+                var principal = tokenHandler.ValidateToken(token, validationParameters, out SecurityToken validatedToken);
+
+                // Aquí puedes revisar los claims si deseas
+                var jwtToken = validatedToken as JwtSecurityToken;
+                if (jwtToken == null || !jwtToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
+                    throw new SecurityTokenException("Token inválido");
+
+                return principal;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
 
 
 

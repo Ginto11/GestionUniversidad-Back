@@ -32,7 +32,7 @@ namespace GestionUniversidad.Controllers
 
             }catch(Exception error)
             {
-                return ManejoException.ServerError(error.Message);
+                return ManejoRespuestas.ServerError(error.Message);
             }
         }
 
@@ -48,13 +48,13 @@ namespace GestionUniversidad.Controllers
                 var programaDto = await programaService.FindDtoById(id);
 
                 if (programaDto is null)
-                    return ManejoException.NotFound(id);
+                    return ManejoRespuestas.NotFound(id);
 
                 return Ok(programaDto);
 
             }catch(Exception error)
             {
-                return ManejoException.ServerError(error.Message);
+                return ManejoRespuestas.ServerError(error.Message);
             }
         }
 
@@ -80,7 +80,7 @@ namespace GestionUniversidad.Controllers
 
             }catch(Exception error)
             {
-                return ManejoException.ServerError(error.Message);
+                return ManejoRespuestas.ServerError(error.Message);
             }
         }
 
@@ -97,7 +97,7 @@ namespace GestionUniversidad.Controllers
                 var programa = await programaService.FindById(id);
 
                 if (programa is null)
-                    return ManejoException.NotFound(id);
+                    return ManejoRespuestas.NotFound(id);
 
                 programa.Nombre = body.Nombre;
                 programa.Descripcion = body.Descripcion;
@@ -110,7 +110,7 @@ namespace GestionUniversidad.Controllers
 
             }catch(Exception error)
             {
-                return ManejoException.ServerError(error.Message);
+                return ManejoRespuestas.ServerError(error.Message);
             }
         }
 
@@ -127,14 +127,14 @@ namespace GestionUniversidad.Controllers
                 var programa = await programaService.FindById(id);
 
                 if (programa is null)
-                    return ManejoException.NotFound(id);
+                    return ManejoRespuestas.NotFound(id);
 
                 await programaService.Delete(programa);
 
                 return NoContent();
             }catch(Exception error)
             {
-                return ManejoException.ServerError(error.Message);
+                return ManejoRespuestas.ServerError(error.Message);
             }
         }
 
