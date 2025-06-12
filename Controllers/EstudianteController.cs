@@ -1,9 +1,12 @@
-﻿using GestionUniversidad.Dtos.Estudiante;
+﻿using GestionUniversidad.Authentication;
+using GestionUniversidad.Dtos.Estudiante;
 using GestionUniversidad.Models;
 using GestionUniversidad.Services;
 using GestionUniversidad.Utilities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 
 namespace GestionUniversidad.Controllers
 {
@@ -11,6 +14,7 @@ namespace GestionUniversidad.Controllers
     [Route("api/estudiantes")]
     public class EstudianteController : Controller
     {
+        private readonly AuthService authService;
         private readonly EstudianteService estudianteService;
         private readonly Utilidades utilidades;
 
@@ -34,7 +38,7 @@ namespace GestionUniversidad.Controllers
             }
             catch(Exception error)
             {
-                return ManejoException.ServerError(error.Message);
+                return ManejoRespuestas.ServerError(error.Message);
             }
         }
 
@@ -51,18 +55,18 @@ namespace GestionUniversidad.Controllers
             {
 
                 if (!User.Identity!.IsAuthenticated)
-                    return ManejoException.Unauthorized();
+                    return ManejoRespuestas.Unauthorized();
 
                 var estudianteDto = await estudianteService.FindDtoById(id);
 
                 if (estudianteDto == null)
-                    return ManejoException.NotFound(id);
+                    return ManejoRespuestas.NotFound(id);
 
                 return Ok(estudianteDto);
             }
             catch (Exception error)
             {
-                return ManejoException.ServerError(error.Message);
+                return ManejoRespuestas.ServerError(error.Message);
             }
         }
 
@@ -74,6 +78,11 @@ namespace GestionUniversidad.Controllers
         {
             try
             {
+                var existsEmail = await estudianteService.FindByEmail(estudianteDto.Email);
+
+                if (existsEmail)
+                    return ManejoRespuestas.Conflict(estudianteDto.Email);
+
                 var estudiante = new Estudiante
                 {
                     Cedula = estudianteDto.Cedula,
@@ -89,10 +98,11 @@ namespace GestionUniversidad.Controllers
                 await estudianteService.Save(estudiante);
 
                 return Created();
+
             }
-            catch (Exception error)
+            catch (SqlException error)
             {
-                return ManejoException.ServerError(error.Message);
+                return ManejoRespuestas.ServerError(error.Message);
             }
 
         }
@@ -110,7 +120,7 @@ namespace GestionUniversidad.Controllers
                 var estudiante = await estudianteService.FindById(id);
 
                 if (estudiante == null)
-                    return ManejoException.NotFound(id);
+                    return ManejoRespuestas.NotFound(id);
 
                 estudiante.Cedula = estudianteDto.Cedula;
                 estudiante.Nombre = estudianteDto.Nombre!;
@@ -126,7 +136,7 @@ namespace GestionUniversidad.Controllers
             }
             catch (Exception error)
             {
-                return ManejoException.ServerError(error.Message);
+                return ManejoRespuestas.ServerError(error.Message);
             }
         }
 
@@ -140,10 +150,19 @@ namespace GestionUniversidad.Controllers
         {
             try
             {
+                string? token = HttpContext.Request.Headers["Authorization"];
+
+                if (!string.IsNullOrEmpty(token) && token.StartsWith("Bearer "))
+                {
+                    token = token.Substring("Bearer ".Length); // Quita "Bearer "
+                                                               // Ahora puedes validarlo
+                    var claims = authService.ValidarToken(token);
+                }
+
                 var estudiante = await estudianteService.FindById(id);
 
                 if (estudiante == null)
-                    return ManejoException.NotFound(id);
+                    return ManejoRespuestas.NotFound(id);
 
                 await estudianteService.Delete(estudiante);
 
@@ -151,7 +170,7 @@ namespace GestionUniversidad.Controllers
 
             }catch(Exception error)
             {
-                return ManejoException.ServerError(error.Message);
+                return ManejoRespuestas.ServerError(error.Message);
             }
         }
 

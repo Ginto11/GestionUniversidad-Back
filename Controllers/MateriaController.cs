@@ -31,7 +31,7 @@ namespace GestionUniversidad.Controllers
 
             }catch(Exception error)
             {
-                return ManejoException.ServerError(error.Message);
+                return ManejoRespuestas.ServerError(error.Message);
             }
         }
 
@@ -48,13 +48,13 @@ namespace GestionUniversidad.Controllers
                 var materia = await materiaService.FindDtoById(id);
 
                 if (materia == null)
-                    return ManejoException.NotFound(id);
+                    return ManejoRespuestas.NotFound(id);
 
                 return Ok(materia);
 
             }catch(Exception error){
 
-                return ManejoException.ServerError(error.Message);
+                return ManejoRespuestas.ServerError(error.Message);
             }
         }
 
@@ -85,7 +85,7 @@ namespace GestionUniversidad.Controllers
             }
             catch (Exception error)
             {
-                return ManejoException.ServerError(error.Message);
+                return ManejoRespuestas.ServerError(error.Message);
             }
         }
 
@@ -105,7 +105,7 @@ namespace GestionUniversidad.Controllers
                 var materia = await materiaService.FindById(id);
 
                 if (materia == null)
-                    return ManejoException.NotFound(id);
+                    return ManejoRespuestas.NotFound(id);
 
                 materia.Id = id;
                 materia.Nombre = materiaDto.Nombre;
@@ -123,7 +123,7 @@ namespace GestionUniversidad.Controllers
 
             }catch(Exception error)
             {
-                return ManejoException.ServerError(error.Message); 
+                return ManejoRespuestas.ServerError(error.Message); 
             }
         }
 
@@ -141,7 +141,7 @@ namespace GestionUniversidad.Controllers
                 var materia = await materiaService.FindById(id);
 
                 if (materia == null)
-                    return ManejoException.NotFound(id);
+                    return ManejoRespuestas.NotFound(id);
 
                 await materiaService.Delete(materia);
 
@@ -149,7 +149,7 @@ namespace GestionUniversidad.Controllers
 
             }catch(Exception error)
             {
-                return ManejoException.ServerError(error.Message);
+                return ManejoRespuestas.ServerError(error.Message);
             }
         }
 

@@ -80,6 +80,25 @@ namespace GestionUniversidad.Services
                 context.Estudiante.Add(entity);
                 await context.SaveChangesAsync();
             }
+            catch (SqlException)
+            {
+                throw;
+            }
+        }
+
+        public async Task<bool> FindByEmail(string email)
+        {
+            try
+            {
+                var existsEmail = await context.Estudiante
+                    .Where(estudiante => estudiante.Email == email)
+                    .FirstOrDefaultAsync();
+
+                if(existsEmail != null)
+                    return true;
+
+                return false;
+            }
             catch (Exception)
             {
                 throw;

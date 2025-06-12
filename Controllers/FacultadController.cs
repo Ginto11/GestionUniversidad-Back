@@ -32,7 +32,7 @@ namespace GestionUniversidad.Controllers
 
             }catch(Exception error)
             {
-                return ManejoException.ServerError(error.Message);
+                return ManejoRespuestas.ServerError(error.Message);
             }
         }
 
@@ -49,13 +49,13 @@ namespace GestionUniversidad.Controllers
             {
                 var facultad = await facultadService.FindDtoById(id);
                 if (facultad == null)
-                    return ManejoException.NotFound(id);
+                    return ManejoRespuestas.NotFound(id);
 
                 return Ok(facultad);
             }
             catch(Exception error)
             {
-                return ManejoException.ServerError(error.Message);
+                return ManejoRespuestas.ServerError(error.Message);
             }
         }
 
@@ -80,7 +80,7 @@ namespace GestionUniversidad.Controllers
 
             }catch(Exception error)
             {
-                return ManejoException.ServerError(error.Message);
+                return ManejoRespuestas.ServerError(error.Message);
             }
         }
 
@@ -97,7 +97,7 @@ namespace GestionUniversidad.Controllers
                 var facultad = await facultadService.FindById(id);
 
                 if (facultad == null)
-                    return ManejoException.NotFound(id);
+                    return ManejoRespuestas.NotFound(id);
 
                 facultad.Nombre = facultadDto.Nombre;
                 facultad.Descripcion = facultadDto.Descripcion;
@@ -108,7 +108,7 @@ namespace GestionUniversidad.Controllers
             }
             catch (Exception error)
             {
-                return ManejoException.ServerError(error.Message);
+                return ManejoRespuestas.ServerError(error.Message);
             }
         }
 
@@ -125,7 +125,7 @@ namespace GestionUniversidad.Controllers
                 var facultad = await facultadService.FindById(id);
 
                 if (facultad == null)
-                    return ManejoException.NotFound(id);
+                    return ManejoRespuestas.NotFound(id);
 
                 await facultadService.Delete(facultad);
 
@@ -135,7 +135,7 @@ namespace GestionUniversidad.Controllers
 
             }catch(Exception error)
             {
-                return ManejoException.ServerError(error.Message);
+                return ManejoRespuestas.ServerError(error.Message);
             }
         } 
 

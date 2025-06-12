@@ -35,7 +35,7 @@ namespace GestionUniversidad.Controllers
             }
             catch(Exception error)
             {
-                return ManejoException.ServerError(error.Message);
+                return ManejoRespuestas.ServerError(error.Message);
             }
         }
 
@@ -53,13 +53,13 @@ namespace GestionUniversidad.Controllers
                 var docente = await docenteService.FindDtoById(id);
 
                 if (docente == null)
-                    return ManejoException.NotFound(id);
+                    return ManejoRespuestas.NotFound(id);
 
                 return Ok(docente);
 
             } catch(Exception error)
             {
-                return ManejoException.ServerError(error.Message);
+                return ManejoRespuestas.ServerError(error.Message);
             }
         }
 
@@ -89,7 +89,7 @@ namespace GestionUniversidad.Controllers
             }
             catch (Exception error)
             {
-                return ManejoException.ServerError(error.Message);
+                return ManejoRespuestas.ServerError(error.Message);
             }
         }
 
@@ -106,7 +106,7 @@ namespace GestionUniversidad.Controllers
                 var docente = await docenteService.FindById(id);
 
                 if (docente == null)
-                    return ManejoException.NotFound(id);
+                    return ManejoRespuestas.NotFound(id);
 
                 docente.Cedula = body.Cedula;
                 docente.Nombre = body.Nombre!;
@@ -122,7 +122,7 @@ namespace GestionUniversidad.Controllers
 
             }catch(Exception error)
             {
-                return ManejoException.ServerError(error.Message);
+                return ManejoRespuestas.ServerError(error.Message);
             }
         }
 
@@ -140,7 +140,7 @@ namespace GestionUniversidad.Controllers
                 var docente = await docenteService.FindById(id);
 
                 if (docente == null)
-                    return ManejoException.NotFound(id);
+                    return ManejoRespuestas.NotFound(id);
 
                 await docenteService.Delete(docente);
 
@@ -148,7 +148,7 @@ namespace GestionUniversidad.Controllers
 
             } catch(Exception error)
             {
-                return ManejoException.ServerError(error.Message);
+                return ManejoRespuestas.ServerError(error.Message);
             }
             
         }

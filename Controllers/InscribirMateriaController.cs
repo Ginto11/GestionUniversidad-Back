@@ -29,11 +29,11 @@ namespace GestionUniversidad.Controllers
                     return NoContent();
                 }
 
-                return ManejoException.BadRequest("Error al momento de inscribir materia");
+                return ManejoRespuestas.BadRequest("Error al momento de inscribir materia");
 
             }catch(Exception error)
             {
-                return ManejoException.ServerError(error.Message);
+                return ManejoRespuestas.ServerError(error.Message);
             }
         }
 
@@ -49,7 +49,7 @@ namespace GestionUniversidad.Controllers
 
             }catch(Exception error)
             {
-                return ManejoException.ServerError(error.Message);
+                return ManejoRespuestas.ServerError(error.Message);
             }
         }
 
@@ -63,14 +63,14 @@ namespace GestionUniversidad.Controllers
                 var inscripcion = await inscribirMateriaService.FindDtoById(id);
 
                 if (inscripcion == null)
-                    return ManejoException.NotFound(id);
+                    return ManejoRespuestas.NotFound(id);
 
                 return Ok(inscripcion);
 
             }
             catch (Exception error)
             {
-                return ManejoException.ServerError(error.Message);
+                return ManejoRespuestas.ServerError(error.Message);
             }
         }
 
@@ -84,14 +84,14 @@ namespace GestionUniversidad.Controllers
                 var inscripcion = await inscribirMateriaService.FindAllByCC(cedula);
 
                 if (inscripcion == null)
-                    return ManejoException.NotFound(cedula);
+                    return ManejoRespuestas.NotFound(cedula);
 
                 return Ok(inscripcion);
 
             }
             catch (Exception error)
             {
-                return ManejoException.ServerError(error.Message);
+                return ManejoRespuestas.ServerError(error.Message);
             }
         }
 
@@ -105,7 +105,7 @@ namespace GestionUniversidad.Controllers
                 var inscripcion = await inscribirMateriaService.FindDtoById(id);
 
                 if (inscripcion == null)
-                    return ManejoException.NotFound(id);
+                    return ManejoRespuestas.NotFound(id);
 
                 await inscribirMateriaService.FinishRegistration(id);
 
@@ -113,7 +113,7 @@ namespace GestionUniversidad.Controllers
 
             }catch(Exception error)
             {
-                return ManejoException.ServerError(error.Message);
+                return ManejoRespuestas.ServerError(error.Message);
             }
         }
     }
