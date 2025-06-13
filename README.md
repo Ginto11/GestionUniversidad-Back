@@ -60,7 +60,7 @@ Es una aplicación backend diseñada para facilitar la administración académic
     ```
 ## 📁 Estructura del proyecto
 ```plaintext
-`📁 GestionUniversidad/`
+📁 GestionUniversidad/
 │
 ├── `📁 Authentication/`       → Controlador de Autenticacion
 ├── `📁 Controllers/`          → Controladores REST
@@ -117,5 +117,5 @@ dotnet ef database update
 ## 💻 Proximas actualizacines
 - [ ] Desarrollar el Front-End en Angular
 - [ ] Terminar todos los endpoints
-- [ ] Implementar la logica para la generacion de matriculas mediante procedimientos almacenados.
-- [ ] Hacer mejoras de codigo.
+- [x] Implementar la logica para la generacion de matriculas mediante procedimientos almacenados.
+- [x] Hacer mejoras de codigo.

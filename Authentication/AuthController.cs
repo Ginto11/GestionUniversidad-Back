@@ -39,7 +39,7 @@ namespace GestionUniversidad.Authentication
                     return ManejoRespuestas.BadRequest("Credenciales incorrectas");
 
                 string nombreCompleto = usuario.Nombre + " " + usuario.Apellido;
-                string token = authService.GenerarToken(usuario.Id, nombreCompleto, usuario.Email, usuario.Rol!.NombreRol);
+                string token = authService.GenerarToken(usuario.Id, nombreCompleto, usuario.Rol!.NombreRol);
 
                 return Ok(new
                 {
@@ -74,7 +74,7 @@ namespace GestionUniversidad.Authentication
 
                
                 string nombreCompleto = usuario.Nombre + " " + usuario.Apellido;
-                string token = authService.GenerarToken(usuario.Id, nombreCompleto, usuario.Email, usuario.Rol!.NombreRol);
+                string token = authService.GenerarToken(usuario.Id, nombreCompleto, usuario.Rol!.NombreRol);
 
                 return Ok(new
                 {
@@ -96,6 +96,7 @@ namespace GestionUniversidad.Authentication
         }
 
 
+
         [HttpGet]
         [Route("validar_token")]
         public IActionResult ValidarToken([FromHeader(Name = "Authorization")] string? tokenHeader)
@@ -111,6 +112,27 @@ namespace GestionUniversidad.Authentication
                     return ManejoRespuestas.ValidacionTokenException("Token no valido.");
 
                 return ManejoRespuestas.ValidacionTokenExitosa("Token valido.");
+
+            }catch(Exception error)
+            {
+                return ManejoRespuestas.ServerError(error.Message);
+            }
+        }
+
+
+        [HttpGet]
+        [Route("decodificar_token")]
+        public ActionResult ExtraerUsuario([FromHeader(Name = "Authorization")] string? token)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(token) || !token.StartsWith("Bearer "))
+                    return ManejoRespuestas.ValidacionTokenException("Token no proporcionado o mal formado");
+
+                var tokenJWT = token.Substring("Bearer ".Length);
+                var data = authService.GetUsuarioFromToken(tokenJWT);
+
+                return Ok(data);
 
             }catch(Exception error)
             {

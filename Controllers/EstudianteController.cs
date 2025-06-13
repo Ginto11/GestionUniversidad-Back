@@ -14,7 +14,6 @@ namespace GestionUniversidad.Controllers
     [Route("api/estudiantes")]
     public class EstudianteController : Controller
     {
-        private readonly AuthService authService;
         private readonly EstudianteService estudianteService;
         private readonly Utilidades utilidades;
 
@@ -112,7 +111,7 @@ namespace GestionUniversidad.Controllers
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
-        [Authorize(Roles = "Administrador")]
+        [Authorize]
         public async Task<ActionResult> Actualizar(PutEstudianteDto estudianteDto, int id)
         {
             try
@@ -150,15 +149,6 @@ namespace GestionUniversidad.Controllers
         {
             try
             {
-                string? token = HttpContext.Request.Headers["Authorization"];
-
-                if (!string.IsNullOrEmpty(token) && token.StartsWith("Bearer "))
-                {
-                    token = token.Substring("Bearer ".Length); // Quita "Bearer "
-                                                               // Ahora puedes validarlo
-                    var claims = authService.ValidarToken(token);
-                }
-
                 var estudiante = await estudianteService.FindById(id);
 
                 if (estudiante == null)

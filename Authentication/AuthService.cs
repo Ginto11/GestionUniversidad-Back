@@ -10,15 +10,13 @@ namespace GestionUniversidad.Authentication
     public class AuthService
     {
         private readonly IConfiguration config;
-        private readonly HttpContextAccessor  httpContextAccessor;
-        public AuthService(IConfiguration config, HttpContextAccessor httpContextAccessor)
+        public AuthService(IConfiguration config)
         {
             this.config = config;
-            this.httpContextAccessor = httpContextAccessor;
         }
 
 
-        public string GenerarToken(int id, string nombreCompleto, string email, string rol)
+        public string GenerarToken(int id, string nombreCompleto, string rol)
         {
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["Jwt:key"]!));
@@ -26,7 +24,7 @@ namespace GestionUniversidad.Authentication
 
             var claims = new[]
             {
-                new Claim("UsuarioId", id.ToString()),
+                new Claim("IdUsuario", id.ToString()),
                 new Claim(ClaimTypes.Name, nombreCompleto),
                 new Claim(ClaimTypes.Role, rol)
             };
@@ -35,7 +33,7 @@ namespace GestionUniversidad.Authentication
                 issuer: config["Jwt:Issuer"],
                 audience: config["Jwt:Audience"],
                 claims,
-                expires: DateTime.UtcNow.AddMinutes(10),
+                expires: DateTime.UtcNow.AddMinutes(1),
                 signingCredentials: credenciales
             );
 
@@ -44,24 +42,24 @@ namespace GestionUniversidad.Authentication
             
         }
 
-        public UsuarioLogueadoDto? GetUsuarioFromToken()
+        public UsuarioLogueadoDto? GetUsuarioFromToken(string token)
         {
-            var identity = httpContextAccessor.HttpContext?.User.Identity as ClaimsIdentity;
 
-            if (identity != null)
+            var manejador = new JwtSecurityTokenHandler();
+
+            if (!manejador.CanReadToken(token))
+                return null;
+
+
+            var usuarioClaims = manejador.ReadJwtToken(token).Claims;
+
+            return new UsuarioLogueadoDto
             {
-                var usuarioClaims = identity.Claims;
+                Id = usuarioClaims.FirstOrDefault(u => u.Type == "IdUsuario")?.Value,
+                NombreCompleto = usuarioClaims.FirstOrDefault(u => u.Type == ClaimTypes.Name)?.Value,
+                Rol = usuarioClaims.FirstOrDefault(u => u.Type == ClaimTypes.Role)?.Value
+            };
 
-                return new UsuarioLogueadoDto
-                {
-                    UsuarioId = usuarioClaims.FirstOrDefault(u => u.Type == "UsuarioId")?.Value,
-                    NombreCompleto = usuarioClaims.FirstOrDefault(u => u.Type == ClaimTypes.Name)?.Value,
-                    Email = usuarioClaims.FirstOrDefault(u => u.Type == ClaimTypes.Email)?.Value,
-                    Rol = usuarioClaims.FirstOrDefault(u => u.Type == ClaimTypes.Role)?.Value
-                };
-            }
-
-            return null;
         }
 
 
