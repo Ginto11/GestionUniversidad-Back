@@ -13,11 +13,9 @@ namespace GestionUniversidad.Authentication
         private readonly EstudianteService estudianteService;
         private readonly DocenteService docenteService;
         private readonly AuthService authService;
-        private readonly HttpContextAccessor httpContextAccessor;
 
-        public AuthController(HttpContextAccessor httpContextAccessor, DocenteService docenteService, AuthService authService, EstudianteService estudianteService)
+        public AuthController(DocenteService docenteService, AuthService authService, EstudianteService estudianteService)
         {
-            this.httpContextAccessor = httpContextAccessor;
             this.docenteService = docenteService;
             this.authService = authService;
             this.estudianteService = estudianteService;
@@ -83,7 +81,6 @@ namespace GestionUniversidad.Authentication
                     {
                         id = usuario.Id,
                         nombre = nombreCompleto,
-                        rol = usuario.Rol!.NombreRol,
                         token
                     },
                 });

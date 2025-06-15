@@ -39,7 +39,8 @@ namespace GestionUniversidad.Services
                         Nombre = programa.Nombre,
                         Descripcion = programa.Descripcion,
                         Duracion = programa.Duracion,
-                        Facultad = programa.Facultad!.Nombre
+                        Facultad = programa.Facultad!.Nombre,
+                        RutaImagen = programa.RutaImagen!
 
                     }).ToListAsync();
             }
@@ -75,7 +76,8 @@ namespace GestionUniversidad.Services
                         Nombre = programa.Nombre,
                         Descripcion = programa.Descripcion,
                         Duracion = programa.Duracion,
-                        Facultad = programa.Facultad!.Nombre
+                        Facultad = programa.Facultad!.Nombre,
+                        RutaImagen = programa.RutaImagen!
 
                     }).FirstOrDefaultAsync();
             }
