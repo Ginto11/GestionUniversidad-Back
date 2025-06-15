@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GestionUniversidad.Controllers
 {
-    [Authorize]
     [ApiController]
     [Route("api/programas")]
     public class ProgramaController : ControllerBase
@@ -37,6 +36,7 @@ namespace GestionUniversidad.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         [Route("{id}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
@@ -59,6 +59,7 @@ namespace GestionUniversidad.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
@@ -85,6 +86,7 @@ namespace GestionUniversidad.Controllers
         }
 
         [HttpPut]
+        [Authorize]
         [Route("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
@@ -115,6 +117,7 @@ namespace GestionUniversidad.Controllers
         }
 
         [HttpDelete]
+        [Authorize]
         [Route("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]

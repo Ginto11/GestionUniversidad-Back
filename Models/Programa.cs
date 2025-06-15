@@ -25,6 +25,9 @@ namespace GestionUniversidad.Models
         [Column("id_facultad")]
         public required int FacultadId { get; set; }
 
+        [Column("ruta_imagen")] 
+        public string? RutaImagen { get; set; }
+
         [JsonIgnore]
         public IEnumerable<Materia>? Materias { get; set; }
 

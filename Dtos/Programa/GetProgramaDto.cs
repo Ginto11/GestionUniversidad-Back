@@ -1,7 +1,4 @@
-﻿using GestionUniversidad.Models;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GestionUniversidad.Dtos.Programa
 {
@@ -17,5 +14,7 @@ namespace GestionUniversidad.Dtos.Programa
         public required byte Duracion { get; set; }
 
         public required string Facultad { get; set; }
+
+        public required string RutaImagen { get; set; }
     }
 }
