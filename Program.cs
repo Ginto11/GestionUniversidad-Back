@@ -77,12 +77,43 @@ if (app.Environment.IsDevelopment())
     });
 }
 
+app.UseSwagger();
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "GestionUniversidad v1");
+
+    //PARA COLOCAR LOS RECURSOS SIN DESPLEGARLOS
+    c.DocExpansion(Swashbuckle.AspNetCore.SwaggerUI.DocExpansion.None);
+
+    //PARA NO MOSTRAR ESQUEMAS
+    //c.DefaultModelsExpandDepth(-1);
+
+});
+
 
 app.UseCors("Todos");
 
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
+
+//APLICAR MIGRACIONES POR DEFECTO
+/*using(var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var loggerFactory = services.GetRequiredService<ILoggerFactory>();
+
+    try
+    {
+        var context = services.GetRequiredService<Database>();
+        context.Database.Migrate();
+    }
+    catch (Exception ex)
+    {
+        var logger = loggerFactory.CreateLogger<Program>();
+        logger.LogError(ex, "Un error ocurrio al ejecutar las migracion.");
+    }
+}*/
 
 app.MapControllers();
 
