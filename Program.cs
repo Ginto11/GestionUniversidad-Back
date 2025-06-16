@@ -47,9 +47,12 @@ builder.Services.AddScoped<InscribirMateriaService>();
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("Todos", app =>
+    options.AddPolicy("MisEntornos", app =>
     {
-        app.AllowAnyOrigin()
+        app.WithOrigins(
+            "https://gestion-universidad.vercel.app", // tu frontend en producción
+            "http://localhost:4200"                    // tu frontend local en desarrollo
+        )
         .AllowAnyHeader()
         .AllowAnyMethod();
     });
@@ -91,7 +94,7 @@ app.UseSwaggerUI(c =>
 });
 
 
-app.UseCors("Todos");
+app.UseCors("MisEntornos");
 
 app.UseHttpsRedirection();
 app.UseAuthentication();

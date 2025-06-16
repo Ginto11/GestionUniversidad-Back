@@ -660,6 +660,25 @@ BEGIN
 END
 GO
 
+
+/*
+    INSERCION DE RUTAS
+    UPDATE programas SET ruta_imagen = 'psicologia.jpg' WHERE id_programa = 1;
+    UPDATE programas SET ruta_imagen = 'diseño-grafico.jpg' WHERE id_programa = 2;
+    UPDATE programas SET ruta_imagen = 'arquitectura.jpg' WHERE id_programa = 3;
+    UPDATE programas SET ruta_imagen = 'ingenieria-sistemas.jpg' WHERE id_programa = 4;
+    UPDATE programas SET ruta_imagen = 'administracion-empresas.jpg' WHERE id_programa = 5;
+    UPDATE programas SET ruta_imagen = 'educacion-infantil.jpg' WHERE id_programa = 6;
+    UPDATE programas SET ruta_imagen = 'medicina.jpg' WHERE id_programa = 7;
+    UPDATE programas SET ruta_imagen = 'contaduria.jpg' WHERE id_programa = 8;
+    UPDATE programas SET ruta_imagen = 'ingenieria-civil.jpg' WHERE id_programa = 9;
+    UPDATE programas SET ruta_imagen = 'derecho.jpeg' WHERE id_programa = 10;
+    UPDATE programas SET ruta_imagen = 'matematicas.png' WHERE id_programa = 11;
+    UPDATE programas SET ruta_imagen = 'enfermeria.jpg' WHERE id_programa = 12;
+
+
+*/
+
 --CREATE PROCEDURE cancelarMatricula()
 
 /*
@@ -675,6 +694,8 @@ SELECT * FROM inscribir_materia;
 SELECT * FROM materias;
 SELECT * FROM programas;
 */
+
+
 
 
 
