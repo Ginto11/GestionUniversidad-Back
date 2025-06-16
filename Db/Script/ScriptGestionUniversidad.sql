@@ -647,7 +647,7 @@ BEGIN
 END
 GO
 
-ALTER PROCEDURE pagarMatricula(
+CREATE PROCEDURE pagarMatricula(
 	@id_matricula INT
 )AS
 BEGIN
