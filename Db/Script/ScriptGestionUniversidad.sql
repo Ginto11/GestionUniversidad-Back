@@ -664,7 +664,7 @@ GO
 /*
     INSERCION DE RUTAS
     UPDATE programas SET ruta_imagen = 'psicologia.jpg' WHERE id_programa = 1;
-    UPDATE programas SET ruta_imagen = 'diseño-grafico.jpg' WHERE id_programa = 2;
+    UPDATE programas SET ruta_imagen = 'diseno-grafico.jpg' WHERE id_programa = 2;
     UPDATE programas SET ruta_imagen = 'arquitectura.jpg' WHERE id_programa = 3;
     UPDATE programas SET ruta_imagen = 'ingenieria-sistemas.jpg' WHERE id_programa = 4;
     UPDATE programas SET ruta_imagen = 'administracion-empresas.jpg' WHERE id_programa = 5;

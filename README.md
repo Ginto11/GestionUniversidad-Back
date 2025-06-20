@@ -1,5 +1,12 @@
  ![Badge en Desarollo](https://img.shields.io/badge/STATUS-EN%20DESAROLLO-green)
-# 🎓 Gestión Universidad
+
+# 🎓 Gestión Universidad-Back
+
+![.NET](https://img.shields.io/badge/.NET-8.0-512BD4?logo=dotnet&logoColor=white) 
+![C%23](https://img.shields.io/badge/C%23-12.0-239120?logo=csharp&logoColor=white) 
+![SQL%20Server](https://img.shields.io/badge/SQL%20Server-2019-CC2927?logo=microsoftsqlserver&logoColor=white) 
+![Entity%20Framework](https://img.shields.io/badge/Entity%20Framework-8.0-512BD4?logo=dotnet&logoColor=white)
+
 
 Es una aplicación backend diseñada para facilitar la administración académica de una universidad. Permite registrar y gestionar estudiantes, docentes, materias, y realizar el proceso completo de matrícula de forma eficiente mediante una API RESTful robusta y segura.
 

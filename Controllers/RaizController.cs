@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GestionUniversidad.Controllers
 {
-    [Route("/")]
+    [Route("")]
     [ApiController]
     public class RaizController : ControllerBase
     {
