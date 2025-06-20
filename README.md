@@ -7,122 +7,160 @@
 ![SQL%20Server](https://img.shields.io/badge/SQL%20Server-2019-CC2927?logo=microsoftsqlserver&logoColor=white) 
 ![Entity%20Framework](https://img.shields.io/badge/Entity%20Framework-8.0-512BD4?logo=dotnet&logoColor=white)
 
-
-Es una aplicación backend diseñada para facilitar la administración académica de una universidad. Permite registrar y gestionar estudiantes, docentes, materias, y realizar el proceso completo de matrícula de forma eficiente mediante una API RESTful robusta y segura.
-
-## 🛠️ Tecnologías y Herramientas utilizadas
-
-- ✅ [.NET 8 (ASP.NET Core)](https://learn.microsoft.com/en-us/aspnet/core/introduction-to-aspnet-core)
-- ✅ [Entity Framework Core](https://learn.microsoft.com/en-us/ef/core/)
-- ✅ [SQL Server](https://www.microsoft.com/sql-server/) Con procedimientos Almacenados
-- ✅ Visual Studio 2022
-- ✅ Swagger (documentación interactiva)
-- ✅ Autenticación y autorización con JWT
-- ✅ Encriptación de contraseñas.
+Esta es la **API REST para la Gestión Universitaria de NovaUniversitas**.  
+Se encarga de administrar estudiantes, docentes, materias, matrículas y otros elementos críticos para la operación de la universidad, utilizando procedimientos almacenados para garantizar eficiencia y seguridad en la administración de datos.
 
 
-## 🔥 Requisitos del sistema
+## 📋 Tabla de Contenido
+- [🎓 GestiónUniversidad-Back](#-gestiónuniversidad-back)
+  - [📋 Tabla de Contenido](#-tabla-de-contenido)
+  - [🗂️ Estructura del Proyecto](#️-estructura-del-proyecto)
+  - [⚡️ Descripción General](#️-descripción-general)
+  - [⚙️ Instalación y Ejecutable Local](#️-instalación-y-ejecutable-local)
+      - [1️⃣ Clonar este repositorio](#1️⃣-clonar-este-repositorio)
+      - [2️⃣ Configurar la conexión.](#2️⃣-configurar-la-conexión)
+      - [3️⃣ Ejecutar Scripts para Procedimientos Almacenados](#3️⃣-ejecutar-scripts-para-procedimientos-almacenados)
+      - [4️⃣ Ejecutar Migraciones EF](#4️⃣-ejecutar-migraciones-ef)
+      - [5️⃣ Ejecutar el Proyecto](#5️⃣-ejecutar-el-proyecto)
+      - [6️⃣ Acceder a la Documentación de la API](#6️⃣-acceder-a-la-documentación-de-la-api)
+      - [🌐 Características principales](#-características-principales)
+  - [📁 Scripts principales](#-scripts-principales)
+  - [🔄 Endpoints principales](#-endpoints-principales)
+  - [🔐 Seguridad](#-seguridad)
+  - [💻 Próximas Actualizaciones](#-próximas-actualizaciones)
+  - [👥 Contribución](#-contribución)
+  - [✉️ Contacto](#️-contacto)
 
-- .NET 8 SDK
-- Visual Studio 2022 o superior
-- SQL Server 2019 o superior
+---
 
-## 🧩 Funcionalidades principales
+## 🗂️ Estructura del Proyecto
 
-- 🔹 **Gestión de Estudiantes**: crear, editar, consultar y eliminar estudiantes.
-- 🔹 **Gestión de Docentes**: administración de datos de los docentes.
-- 🔹 **Materias**: registrar nuevas materias, asociar docentes, definir créditos y valores.
-- 🔹 **Matrículas**: generar matrículas con control de estado, fecha, costo y validaciones automáticas.
-- 🔹 **Validaciones**: uso de anotaciones de datos y lógica de negocio para garantizar integridad.
-- 🔹 **Procedimientos almacenados**: para operaciones críticas y cálculo de costos o promociones.
-- 🔹 **Documentación Swagger UI**: explora todos los endpoints desde el navegador.
-
-## 🚀 Instalación y ejecución local
-
-1. Clona el repositorio:
-   ```bash
-   git clone https://github.com/tu-usuario/gestion-universidad.git
-   ```
-2. Abre el proyecto con Visual Studio 2022.
-3. Configura la cadena de conexión en appsettings.Development.json (no subir al repo):
-    ```json
-    {
-        "ConnectionStrings": {
-            "DefaultConnection": "Server=Servidor;Database=BD;User Id=usuario;Password=Contraseña; TrustServerCertificate=true"
-        }
-    }
-    ```
-4. **Importante:** abrir Sql Server y ejecutar el script que va estar en la carpeta **Utilies**, ese script es el que contiene los procedimientos almacenados.
-5. Ejecuta migraciones y actualiza la base de datos:
-    ```bash
-    dotnet ef database update
-    ```
-6. Ejecuta el proyecto (F5 en Visual Studio o dotnet run en terminal).
-
-7. Abre tu navegador y visita:
-
- 
-    ```bash
-    http://localhost:<puerto>/swagger
-    ```
-## 📁 Estructura del proyecto
 ```plaintext
-📁 GestionUniversidad/
-│
-├── `📁 Authentication/`       → Controlador de Autenticacion
-├── `📁 Controllers/`          → Controladores REST
-├── `📁 Db/`                   → Migraciones y contexto EF
-├── `📁 Dtos/`                 → Objetos de transferencia de datos
-├── `📁 Interfaces`            → Interfaz de servicio
-├── `📁 Models/`               → Modelos de entidad
-├── `📁 Services/`             → Lógica de negocio
-├── `📁 Utilies/`              → Acceso a datos y procedimientos almacenados
-└── `Program.cs`               → Configuración de la app
+📁 GestionUniversidad-Back/
+├─ 📁 Authentication/           → Controlador de Autenticación
+├─ 📁 Controllers/              → Controladores REST
+├─ 📁 Db/                       → Migraciones y Contexto EF
+├─ 📁 Dtos/                     → Objetos de Transferencia de Datos
+├─ 📁 Interfaces/               → Interfaces de servicios
+├─ 📁 Models/                   → Modelos de entidad
+├─ 📁 Services/                 → Lógica de negocio
+├─ 📁 Utilies/                  → Scripts y procedimientos almacenados
+└─ Program.cs                   → Configuración de la app
 ```
 
-## 🔁 Endpoints
-Una tabla o lista de algunos recursos de la aplicación:
+## ⚡️ Descripción General
+✅ Framework: .NET 8 (ASP.NET Core)
+✅ Lenguaje: C# 12.0
+✅ ORM: Entity Framework 8.0 para mapeo de datos y migraciones.
+✅ Base de Datos: SQL Server 2019
+✅ Autenticación y autorización con JWT.
+✅ Scripts para procedimientos críticos y generación de matrículas.
+✅ Validaciones para garantizar integridad de datos.
+✅ Endpoints REST para estudiantes, docentes, materias y matrículas.
 
-| Recurso     | Método | Ruta                         | Descripción                          |
-|-------------|--------|------------------------------|--------------------------------------|
-| Estudiantes | GET    | `/api/estudiantes`           | Lista todos los estudiantes          |
-| Docente     | GET   | `/api/docentes`               | Lista todos los docentes             |
-| Login    | POST    | `/api/login...`                | Dos metodos que permiten loguearse            |
-| Materias    | GET   | `/api/materias`              | Lista todas las materias   |
-| Matrículas  | POST   | `/api/matriculas`            | Genera una matrícula                 |
 
-
-## 🔄 Migraciones EF
-
-Una guía corta para crear nuevas migraciones:
-
-Si agregas cambios al modelo, genera una nueva migración:
-
+## ⚙️ Instalación y Ejecutable Local
+#### 1️⃣ Clonar este repositorio
 ```bash
-dotnet ef migrations add NombreMigracion
-dotnet ef migrations remove NombreMigracion
+git clone https://github.com/Ginto11/GestionUniversidad-Back.git
+```
+
+#### 2️⃣ Configurar la conexión.
+```json
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=TU_SERVIDOR;Database=TU_BASE_DATOS;User Id=TU_USER;Password=TU_PASSWORD;TrustServerCertificate=true"
+  }
+}
+```
+#### 3️⃣ Ejecutar Scripts para Procedimientos Almacenados
+- Abre SQL Server e importa los procedimientos que encontrarás en la carpeta `Db/Script`.
+
+#### 4️⃣ Ejecutar Migraciones EF
+```bash
 dotnet ef database update
 ```
 
----
-## 🔒 Seguridad
+#### 5️⃣ Ejecutar el Proyecto
+- Ejecuta con Visual Studio 2022 (`F5`) o por CLI:
+```bash
+dotnet run
+```
 
-- Autenticación mediante JWT Bearer Tokens.
+#### 6️⃣ Acceder a la Documentación de la API
+```bash
+http://localhost:<puerto>/swagger
+```
 
-- Autorización por roles para limitar accesos (Administrador, Estudiante, Docente).
+#### 🌐 Características principales
+- 👥 Estudiantes: Crear, editar, consultar y eliminar estudiantes.
 
-- Protección contra inyecciones SQL y validación de datos en todos los endpoints.
-- Encriptación de contraseñas.
+- 👔 Docentes: Gestión de datos de los docentes.
 
-## 📌 Pruebas
+- 📚 Materias: Crear y administrar asignaturas, créditos y costos.
 
-- Usa Insomnia o Postman para probar los endpoints.
+- 💳 Matrículas: Generación de matrículas basada en procedimientos almacenados.
 
-- Swagger UI te permite probar directamente desde el navegador.
+- ✅ Validaciones de datos para garantizar integridad.
+
+- 📄 Swagger UI para documentación y pruebas.
+
+## 📁 Scripts principales
+| Comando                                | Descripción                                                  |
+| -------------------------------------- | ------------------------------------------------------------ |
+| `dotnet build`                         | Compila la solución .NET.                                    |
+| `dotnet run`                           | Ejecuta la aplicación en local.                              |
+| `dotnet ef database update`            | Aplica todas las migraciones pendientes en la base de datos. |
+| `dotnet ef migrations add <nombre>`    | Crea una nueva migración para reflejar cambios en el modelo. |
+| `dotnet ef migrations remove <nombre>` | Elimina una migración no deseada.                            |
+
+## 🔄 Endpoints principales
+| Recurso     | Método | Ruta               | Descripción                              |
+| ----------- | ------ | ------------------ | ---------------------------------------- |
+| Estudiantes | GET    | `/api/estudiantes` | Lista todos los estudiantes.             |
+| Docentes    | GET    | `/api/docentes`    | Lista todos los docentes.                |
+| Login       | POST   | `/api/login`       | Autenticación de usuarios.               |
+| Materias    | GET    | `/api/materias`    | Lista todas las materias.                |
+| Matrículas  | POST   | `/api/matriculas`  | Genera una matrícula para un estudiante. |
+
+## 🔐 Seguridad
+- 🔑 Autenticación mediante JWT Bearer Tokens para todas las rutas privadas.
+
+- ⚔️ Protección contra inyecciones SQL y validación de datos en todos los endpoints.
+
+- 🔐 Encriptación de contraseñas para garantizar la seguridad de la información.
 
 
-## 💻 Proximas actualizacines
-- [ ] Desarrollar el Front-End en Angular
-- [ ] Terminar todos los endpoints
-- [x] Implementar la logica para la generacion de matriculas mediante procedimientos almacenados.
-- [x] Hacer mejoras de codigo.
+## 💻 Próximas Actualizaciones
+- [ ] Integración con el Front‑End en Angular.
+
+- [x] Finalización de todos los endpoints restantes.
+
+- [x] Implementación de lógica para generación de matrículas mediante procedimientos.
+
+- [x] Mejoras en la estructura de la lógica de servicios.
+
+## 👥 Contribución
+Si deseas contribuir al proyecto:
+1. Realiza un fork del proyecto.
+2. Crea una nueva rama para tu feature:
+```bash
+git checkout -b feature/nueva-funcionalidad
+```
+3. Agrega todos los cambios:
+```bash
+git add .
+```
+4. Haz commit de los cambios:
+```bash
+git commit -m "Agrega nueva funcionalidad"
+```
+5. Push al repositorio:
+```bash
+git push origin feature/nueva-funcionalidad
+```
+
+## ✉️ Contacto
+Si deseas comunicarte para colaborar, obtener soporte o hacer consultas:
+
+- 📧 Email: salinitosnelson@gmail.com

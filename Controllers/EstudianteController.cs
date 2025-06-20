@@ -50,6 +50,7 @@ namespace GestionUniversidad.Controllers
         [Authorize(Roles = "Administrador")]
         public async Task<ActionResult> BuscarPorId(int id)
         {
+
             try
             {
 
