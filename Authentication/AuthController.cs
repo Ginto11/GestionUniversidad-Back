@@ -130,7 +130,7 @@ namespace GestionUniversidad.Authentication
                 var data = authService.GetUsuarioFromToken(tokenJWT);
 
                 return Ok(data);
-
+                
             }catch(Exception error)
             {
                 return ManejoRespuestas.ServerError(error.Message);
