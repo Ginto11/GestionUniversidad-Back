@@ -31,7 +31,6 @@ Se encarga de administrar estudiantes, docentes, materias, matrículas y otros e
   - [👥 Contribución](#-contribución)
   - [✉️ Contacto](#️-contacto)
 
----
 
 ## 🗂️ Estructura del Proyecto
 
