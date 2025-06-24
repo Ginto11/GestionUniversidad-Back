@@ -151,7 +151,8 @@ namespace GestionUniversidad.Services
                         Edad = estudiante.Edad,
                         Email = estudiante.Email,
                         Rol = estudiante.Rol!.NombreRol,
-                        Genero = estudiante.Genero!.Nombre
+                        Genero = estudiante.Genero!.Nombre,
+                        GeneroId = estudiante.Genero!.Id
                     }).FirstOrDefaultAsync();
             }
             catch (Exception)

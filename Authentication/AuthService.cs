@@ -33,7 +33,7 @@ namespace GestionUniversidad.Authentication
                 issuer: config["Jwt:Issuer"],
                 audience: config["Jwt:Audience"],
                 claims,
-                expires: DateTime.UtcNow.AddMinutes(10),
+                expires: DateTime.UtcNow.AddMinutes(5),
                 signingCredentials: credenciales
             );
 

@@ -12,6 +12,8 @@ namespace GestionUniversidad.Dtos.Estudiante
         public required int Edad { get; set; }
         public required string Email { get; set; }
         public required string Genero { get; set; }
+        public required int GeneroId { get; set; }
+
         public required string Rol { get; set; }
     }
 }

@@ -44,6 +44,7 @@ builder.Services.AddScoped<HttpContextAccessor>();
 builder.Services.AddScoped<MateriaService>();
 builder.Services.AddScoped<MatriculaService>();
 builder.Services.AddScoped<InscribirMateriaService>();
+builder.Services.AddScoped<GeneroService>();
 
 builder.Services.AddCors(options =>
 {
