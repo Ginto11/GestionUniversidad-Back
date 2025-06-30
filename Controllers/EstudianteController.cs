@@ -6,7 +6,6 @@ using GestionUniversidad.Utilities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
-using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 
 namespace GestionUniversidad.Controllers
 {
@@ -36,6 +35,25 @@ namespace GestionUniversidad.Controllers
                 return Ok(estudiantesDto);
             }
             catch(Exception error)
+            {
+                return ManejoRespuestas.ServerError(error.Message);
+            }
+        }
+
+        [HttpGet]
+        [Authorize]
+        [Route("{nPagina}/{nMostrar}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(500)]
+        public async Task<ActionResult<GetEstudianteDto>> ListarPaginacion(int nPagina, int nMostrar)
+        {
+            try
+            {
+                var estudiantesDto = await estudianteService.FindPagination(nPagina, nMostrar);
+
+                return Ok(estudiantesDto);
+            }
+            catch (Exception error)
             {
                 return ManejoRespuestas.ServerError(error.Message);
             }
@@ -89,9 +107,13 @@ namespace GestionUniversidad.Controllers
                     Nombre = estudianteDto.Nombre,
                     Apellido = estudianteDto.Apellido,
                     Edad = estudianteDto.Edad,
+                    Celular = estudianteDto.Celular,
                     Email = estudianteDto.Email,
                     Contrasena = utilidades.Encriptar(estudianteDto.Contrasena),
                     GeneroId = estudianteDto.GeneroId,
+                    Estado = false,
+                    FechaCreacion = DateTime.Now,
+                    FechaActualizacion = DateTime.Now,
                     RolId = 2
                 };
 
@@ -126,9 +148,11 @@ namespace GestionUniversidad.Controllers
                 estudiante.Nombre = estudianteDto.Nombre!;
                 estudiante.Apellido = estudianteDto.Apellido!;
                 estudiante.Edad = estudianteDto.Edad;
+                estudiante.Celular = estudianteDto.Celular;
                 estudiante.Email = estudianteDto.Email!;
-                estudiante.RolId = estudianteDto.RolId;
                 estudiante.GeneroId = estudianteDto.GeneroId;
+                estudiante.FechaActualizacion = DateTime.Now;
+                estudiante.Estado = estudianteDto.Estado;
 
                 await estudianteService.Update(estudiante);
 

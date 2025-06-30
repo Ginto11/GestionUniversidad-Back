@@ -34,10 +34,14 @@ namespace GestionUniversidad.Services
                     Cedula = docente.Cedula,
                     Nombre = docente.Nombre,
                     Apellido = docente.Apellido,
+                    Celular = docente.Celular,
                     Edad = docente.Edad,
                     Email = docente.Email,
                     Rol = docente.Rol!.NombreRol,
-                    Genero = docente.Genero!.Nombre
+                    Genero = docente.Genero!.Nombre,
+                    Estado = docente.Estado,
+                    FechaCreacion = docente.FechaCreacion,
+                    FechaActualizacion = docente.FechaActualizacion
                 }).ToListAsync();
             }
             catch (Exception)
@@ -129,9 +133,13 @@ namespace GestionUniversidad.Services
                     Nombre = docente.Nombre,
                     Apellido = docente.Apellido,
                     Edad = docente.Edad,
+                    Celular = docente.Celular,
                     Email = docente.Email,
                     Rol = docente.Rol!.NombreRol,
-                    Genero = docente.Genero!.Nombre
+                    Estado = docente.Estado,
+                    Genero = docente.Genero!.Nombre,
+                    FechaCreacion = docente.FechaCreacion,
+                    FechaActualizacion = docente.FechaActualizacion
                 }).FirstOrDefaultAsync();
             }
             catch (Exception)

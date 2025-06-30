@@ -77,10 +77,14 @@ namespace GestionUniversidad.Controllers
                     Nombre = body.Nombre,
                     Apellido = body.Apellido,
                     Edad = body.Edad,
+                    Celular = body.Celular,
                     GeneroId = body.GeneroId,
                     Email = body.Email,
                     Contrasena = utilidades.Encriptar(body.Contrasena),
-                    RolId = body.RolId
+                    RolId = body.RolId,
+                    Estado =  false,
+                    FechaCreacion = DateTime.Now,
+                    FechaActualizacion = DateTime.Now
                 };
 
                 await docenteService.Save(docenteCreado);
@@ -115,6 +119,8 @@ namespace GestionUniversidad.Controllers
                 docente.Email = body.Email!;
                 docente.RolId = body.RolId; 
                 docente.GeneroId = body.GeneroId;
+                docente.FechaActualizacion = DateTime.Now;
+                docente.Estado = body.Estado;
 
                 await docenteService.Update(docente);
 

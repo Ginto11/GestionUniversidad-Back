@@ -24,6 +24,9 @@ namespace GestionUniversidad.Models
         [Column("edad")]
         public required int Edad { get; set; }
 
+        [Column("celular")]
+        public string? Celular { get; set; }
+
         [Column("id_genero")]
         [MaxLength(10)]
         public required  int GeneroId { get; set; }
@@ -36,6 +39,15 @@ namespace GestionUniversidad.Models
         [MaxLength(100)]
         [Column("contrasena")]
         public required string Contrasena { get; set; }
+
+        [Column("fecha_creacion")]
+        public required DateTime FechaCreacion { get; set; }
+        
+        [Column("fecha_actualizacion")]
+        public required DateTime FechaActualizacion { get; set; }
+
+        [Column("estado")]
+        public required bool Estado { get; set; }
 
         [Column("id_rol")]
         public int RolId { get; set; }

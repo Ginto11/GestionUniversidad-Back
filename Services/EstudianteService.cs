@@ -6,7 +6,6 @@ using GestionUniversidad.Models;
 using GestionUniversidad.Utilities;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace GestionUniversidad.Services
 {
@@ -46,12 +45,17 @@ namespace GestionUniversidad.Services
                         Nombre = estudiante.Nombre,
                         Apellido = estudiante.Apellido,
                         Edad = estudiante.Edad,
+                        Celular = estudiante.Celular,
                         Email = estudiante.Email,
                         Rol = estudiante.Rol!.NombreRol,
-                        Genero = estudiante.Genero!.Nombre
+                        Genero = estudiante.Genero!.Nombre,
+                        GeneroId = estudiante.GeneroId,
+                        Estado = estudiante.Estado,
+                        FechaActualizacion = estudiante.FechaActualizacion,
+                        FechaCreacion = estudiante.FechaCreacion
                     })
                     .Where(estudiante => estudiante.Rol == "Estudiante")
-                    .OrderByDescending(estudiante => estudiante.Id)
+                    .OrderByDescending(estudiante => estudiante.FechaActualizacion)
                     .ToListAsync();
             }
             catch(Exception)
@@ -59,6 +63,41 @@ namespace GestionUniversidad.Services
                 throw;
             }
         }
+
+        public async Task<IEnumerable<GetEstudianteDto>> FindPagination(int nPagina, int nMostrar)
+        {
+
+            try
+            {
+                return await context.Estudiante
+                    .Select(estudiante => new GetEstudianteDto
+                    {
+                        Id = estudiante.Id,
+                        Cedula = estudiante.Cedula,
+                        Nombre = estudiante.Nombre,
+                        Apellido = estudiante.Apellido,
+                        Edad = estudiante.Edad,
+                        Celular = estudiante.Celular,
+                        Email = estudiante.Email,
+                        Rol = estudiante.Rol!.NombreRol,
+                        Genero = estudiante.Genero!.Nombre,
+                        GeneroId = estudiante.GeneroId,
+                        Estado = estudiante.Estado,
+                        FechaActualizacion = estudiante.FechaActualizacion,
+                        FechaCreacion = estudiante.FechaCreacion
+                    })
+                    .Where(estudiante => estudiante.Rol == "Estudiante")
+                    .OrderByDescending(estudiante => estudiante.FechaActualizacion)
+                    .Skip((nPagina -1) * nMostrar)
+                    .Take(nMostrar)
+                    .ToListAsync();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
 
         public Task<Estudiante?> FindById(int id)
         {
@@ -149,10 +188,14 @@ namespace GestionUniversidad.Services
                         Nombre = estudiante.Nombre,
                         Apellido = estudiante.Apellido,
                         Edad = estudiante.Edad,
+                        Celular = estudiante.Celular,
                         Email = estudiante.Email,
                         Rol = estudiante.Rol!.NombreRol,
                         Genero = estudiante.Genero!.Nombre,
-                        GeneroId = estudiante.Genero!.Id
+                        GeneroId = estudiante.GeneroId,
+                        Estado = estudiante.Estado,
+                        FechaCreacion = estudiante.FechaCreacion,
+                        FechaActualizacion = estudiante.FechaActualizacion
                     }).FirstOrDefaultAsync();
             }
             catch (Exception)

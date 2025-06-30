@@ -4,6 +4,7 @@ using GestionUniversidad.Db;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GestionUniversidad.Db.Migrations
 {
     [DbContext(typeof(Database))]
-    partial class DatabaseModelSnapshot : ModelSnapshot
+    [Migration("20250629181001_AñadiendoFechasDeSeguimientoEnEstudiante")]
+    partial class AñadiendoFechasDeSeguimientoEnEstudiante
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -41,9 +44,6 @@ namespace GestionUniversidad.Db.Migrations
                         .HasColumnType("int")
                         .HasColumnName("cedula");
 
-                    b.Property<string>("Celular")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Contrasena")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -59,18 +59,6 @@ namespace GestionUniversidad.Db.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)")
                         .HasColumnName("email");
-
-                    b.Property<bool>("Estado")
-                        .HasColumnType("bit")
-                        .HasColumnName("estado");
-
-                    b.Property<DateTime>("FechaActualizacion")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("fecha_actualizacion");
-
-                    b.Property<DateTime>("FechaCreacion")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("fecha_creacion");
 
                     b.Property<int>("GeneroId")
                         .HasMaxLength(10)
@@ -158,10 +146,6 @@ namespace GestionUniversidad.Db.Migrations
                         .HasColumnType("int")
                         .HasColumnName("cedula");
 
-                    b.Property<string>("Celular")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("celular");
-
                     b.Property<string>("Contrasena")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -177,10 +161,6 @@ namespace GestionUniversidad.Db.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)")
                         .HasColumnName("email");
-
-                    b.Property<bool>("Estado")
-                        .HasColumnType("bit")
-                        .HasColumnName("estado");
 
                     b.Property<DateTime>("FechaActualizacion")
                         .HasColumnType("datetime2")
