@@ -203,5 +203,35 @@ namespace GestionUniversidad.Services
                 throw;
             }
         }
+
+        public async Task<GetEstudianteDto?> FindDtoByCedula(int cedula)
+        {
+            try
+            {
+                return await context.Estudiante
+                    .Where(estudiante => estudiante.Cedula == cedula && estudiante.Rol!.NombreRol == "Estudiante")
+                    .Select(estudiante => new GetEstudianteDto
+                    {
+                        Id = estudiante.Id,
+                        Cedula = estudiante.Cedula,
+                        Nombre = estudiante.Nombre,
+                        Apellido = estudiante.Apellido,
+                        Edad = estudiante.Edad,
+                        Celular = estudiante.Celular,
+                        Email = estudiante.Email,
+                        Rol = estudiante.Rol!.NombreRol,
+                        Genero = estudiante.Genero!.Nombre,
+                        GeneroId = estudiante.GeneroId,
+                        Estado = estudiante.Estado,
+                        FechaCreacion = estudiante.FechaCreacion,
+                        FechaActualizacion = estudiante.FechaActualizacion
+                    }).FirstOrDefaultAsync();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
     }
 }
