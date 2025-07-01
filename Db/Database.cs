@@ -51,6 +51,7 @@ namespace GestionUniversidad.Db
             modelBuilder.Entity<Matricula>()
                 .Property(matricula => matricula.EstaPaga)
                 .HasDefaultValue(0);
+
         }
     }
 }

@@ -17,13 +17,17 @@ namespace GestionUniversidad.Dtos.Estudiante
         [Range(1, 100, ErrorMessage = "La edad debe ser mayor a 0.")]
         public required int Edad { get; set; }
 
+        public string? Celular { get; set; }
+
         [EmailAddress]
         public required string Email { get; set; }
 
         [Range(1, 10, ErrorMessage = "El generoId debe ser mayor a 0.")]
         public required int GeneroId { get; set; }
 
-        [Range(1, 100, ErrorMessage = "El rolId debe ser mayor a 0.")]
-        public required int RolId { get; set; }
+        public required bool Estado { get; set; }
+
+        public required DateTime FechaActualizacion { get; set; }
+
     }
 }
