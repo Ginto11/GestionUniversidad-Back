@@ -42,9 +42,44 @@ namespace GestionUniversidad.Services
                     Estado = docente.Estado,
                     FechaCreacion = docente.FechaCreacion,
                     FechaActualizacion = docente.FechaActualizacion
-                }).ToListAsync();
+                })
+                .Where(docente => docente.Rol == "Docente")
+                .OrderByDescending(docente => docente.FechaActualizacion)
+                .ToListAsync();
             }
             catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task<IEnumerable<GetDocenteDto>> FindPagination(int nPagina, int nMostrar)
+        {
+            try
+            {
+                return await context.Docente.Select(docente => new GetDocenteDto
+                {
+                    Id = docente.Id,
+                    Cedula = docente.Cedula,
+                    Nombre = docente.Nombre,
+                    Apellido = docente.Apellido,
+                    Celular = docente.Celular,
+                    Edad = docente.Edad,
+                    Email = docente.Email,
+                    Rol = docente.Rol!.NombreRol,
+                    Genero = docente.Genero!.Nombre,
+                    Estado = docente.Estado,
+                    FechaCreacion = docente.FechaCreacion,
+                    FechaActualizacion = docente.FechaActualizacion
+
+                })
+                .Where(docente => docente.Rol == "Docente")
+                .OrderByDescending(docente => docente.FechaActualizacion)
+                .Skip((nPagina - 1) * nMostrar)
+                .Take(nMostrar)
+                .ToListAsync();
+
+            }catch(Exception)
             {
                 throw;
             }
@@ -62,6 +97,25 @@ namespace GestionUniversidad.Services
                 throw;
             }
 
+        }
+
+        public async Task<bool> FindByEmail(string email)
+        {
+            try
+            {
+                var existsEmail = await context.Docente
+                    .Where(docente => docente.Email == email)
+                    .FirstOrDefaultAsync();
+
+                if (existsEmail != null)
+                    return true;
+
+                return false;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public async Task Save(Docente entity)
