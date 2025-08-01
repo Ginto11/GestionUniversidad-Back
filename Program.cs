@@ -51,8 +51,8 @@ builder.Services.AddCors(options =>
     options.AddPolicy("MisEntornos", app =>
     {
         app.WithOrigins(
-            "https://gestion-universidad.vercel.app", // tu frontend en producción
-            "http://localhost:4200"                    // tu frontend local en desarrollo
+            "https://gestion-universidad.vercel.app", //Frontend en producción
+            "http://localhost:4200"                    //Frontend local en desarrollo
         )
         .AllowAnyHeader()
         .AllowAnyMethod();

@@ -25,13 +25,9 @@ namespace GestionUniversidad.Dtos.Docente
         [MinLength(10, ErrorMessage = "La contraseña debe tener como minimo 10 caracteres.")]
         public required string Contrasena { get; set; }
 
-        public required bool Estado { get; set; }
-
         [Range(1, 10, ErrorMessage = "El generoId debe ser mayor a 0.")]
         public required int GeneroId { get; set; }
 
-        [Range(1, 100, ErrorMessage = "El rolId debe ser mayor a 0.")]
-        public required int RolId { get; set; }
 
     }
 }

@@ -39,6 +39,25 @@ namespace GestionUniversidad.Controllers
             }
         }
 
+        [HttpGet]
+        [Authorize]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(500)]
+        [Route("{nPagina}/{nMostrar}")]
+        public async Task<ActionResult<GetDocenteDto>> ListarPaginacion(int nPagina, int nMostrar)
+        {
+            try
+            {
+                var docentes = await docenteService.FindPagination(nPagina, nMostrar);
+
+                return Ok(docentes);
+            }
+            catch (Exception error)
+            {
+                return ManejoRespuestas.ServerError(error.Message);
+            }
+        }
+
         //METODO QUE ME BUSCA UN DOCENTE POR ID
         [HttpGet]
         [Authorize]
@@ -71,6 +90,12 @@ namespace GestionUniversidad.Controllers
         {
             try
             {
+
+                var existsEmail = await docenteService.FindByEmail(body.Email);
+
+                if (existsEmail)
+                    return ManejoRespuestas.Conflict(body.Email);
+
                 var docenteCreado = new Docente
                 {
                     Cedula = body.Cedula,
@@ -81,7 +106,7 @@ namespace GestionUniversidad.Controllers
                     GeneroId = body.GeneroId,
                     Email = body.Email,
                     Contrasena = utilidades.Encriptar(body.Contrasena),
-                    RolId = body.RolId,
+                    RolId = 3,
                     Estado =  false,
                     FechaCreacion = DateTime.Now,
                     FechaActualizacion = DateTime.Now
