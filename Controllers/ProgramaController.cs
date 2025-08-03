@@ -1,4 +1,5 @@
-﻿using GestionUniversidad.Dtos.Programa;
+﻿using GestionUniversidad.Dtos.Estudiante;
+using GestionUniversidad.Dtos.Programa;
 using GestionUniversidad.Models;
 using GestionUniversidad.Services;
 using GestionUniversidad.Utilities;
@@ -37,6 +38,25 @@ namespace GestionUniversidad.Controllers
 
         [HttpGet]
         [Authorize]
+        [Route("{nPagina}/{nMostrar}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(500)]
+        public async Task<ActionResult<GetProgramaDto>> ListarPaginacion(int nPagina, int nMostrar)
+        {
+            try
+            {
+                var programasDto = await programaService.FindPagination(nPagina, nMostrar);
+
+                return Ok(programasDto);
+            }
+            catch (Exception error)
+            {
+                return ManejoRespuestas.ServerError(error.Message);
+            }
+        }
+
+        [HttpGet]
+        [Authorize]
         [Route("{id}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
@@ -63,16 +83,25 @@ namespace GestionUniversidad.Controllers
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
-        public async Task<ActionResult> Crear(PostProgramaDto body)
+        public async Task<ActionResult> Crear([FromForm] PostProgramaDto body)
         {
             try
             {
+
+                var imagen = body.Imagen;
+
+                if(imagen == null || imagen.Length == 0)
+                    return BadRequest("No se recibió la imagen.");
+
+                var ruta = await programaService.SaveImage(imagen);
+
                 var programa = new Programa
                 {
                     Nombre = body.Nombre,
                     Descripcion = body.Descripcion,
                     Duracion = body.Duracion,
                     FacultadId = body.FacultadId,
+                    RutaImagen = body.Imagen.FileName
                 };
 
                 await programaService.Save(programa);
