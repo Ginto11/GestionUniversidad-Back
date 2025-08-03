@@ -82,6 +82,36 @@ namespace GestionUniversidad.Controllers
             }
         }
 
+        [HttpGet]
+        [Authorize]
+        [Route("buscar/{cedula}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
+        [Authorize(Roles = "Administrador")]
+        public async Task<ActionResult> BuscarPorCedula(int cedula)
+        {
+
+            try
+            {
+
+                if (!User.Identity!.IsAuthenticated)
+                    return ManejoRespuestas.Unauthorized();
+
+                var docenteDto = await docenteService.FindDtoByCedula(cedula);
+
+                if (docenteDto == null)
+                    return ManejoRespuestas.NotFound(cedula);
+
+                return Ok(docenteDto);
+            }
+            catch (Exception error)
+            {
+                return ManejoRespuestas.ServerError(error.Message);
+            }
+        }
+
+
         [HttpPost]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]

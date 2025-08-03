@@ -1,12 +1,13 @@
-﻿using GestionUniversidad.Interfaces;
-using GestionUniversidad.Db;
-using Microsoft.Data.SqlClient;
-using GestionUniversidad.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using GestionUniversidad.Db;
 using GestionUniversidad.Dtos.Docente;
+using GestionUniversidad.Dtos.Estudiante;
 using GestionUniversidad.Dtos.Usuario;
+using GestionUniversidad.Interfaces;
+using GestionUniversidad.Models;
 using GestionUniversidad.Utilities;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 
 namespace GestionUniversidad.Services
 {
@@ -38,6 +39,7 @@ namespace GestionUniversidad.Services
                     Edad = docente.Edad,
                     Email = docente.Email,
                     Rol = docente.Rol!.NombreRol,
+                    GeneroId = docente.GeneroId,
                     Genero = docente.Genero!.Nombre,
                     Estado = docente.Estado,
                     FechaCreacion = docente.FechaCreacion,
@@ -67,6 +69,7 @@ namespace GestionUniversidad.Services
                     Edad = docente.Edad,
                     Email = docente.Email,
                     Rol = docente.Rol!.NombreRol,
+                    GeneroId = docente.GeneroId,
                     Genero = docente.Genero!.Nombre,
                     Estado = docente.Estado,
                     FechaCreacion = docente.FechaCreacion,
@@ -191,10 +194,40 @@ namespace GestionUniversidad.Services
                     Email = docente.Email,
                     Rol = docente.Rol!.NombreRol,
                     Estado = docente.Estado,
+                    GeneroId = docente.GeneroId,
                     Genero = docente.Genero!.Nombre,
                     FechaCreacion = docente.FechaCreacion,
                     FechaActualizacion = docente.FechaActualizacion
                 }).FirstOrDefaultAsync();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task<GetDocenteDto?> FindDtoByCedula(int cedula)
+        {
+            try
+            {
+                return await context.Docente
+                    .Where(estudiante => estudiante.Cedula == cedula && estudiante.Rol!.NombreRol == "Docente")
+                    .Select(estudiante => new GetDocenteDto
+                    {
+                        Id = estudiante.Id,
+                        Cedula = estudiante.Cedula,
+                        Nombre = estudiante.Nombre,
+                        Apellido = estudiante.Apellido,
+                        Edad = estudiante.Edad,
+                        Celular = estudiante.Celular,
+                        Email = estudiante.Email,
+                        Rol = estudiante.Rol!.NombreRol,
+                        Genero = estudiante.Genero!.Nombre,
+                        GeneroId = estudiante.GeneroId,
+                        Estado = estudiante.Estado,
+                        FechaCreacion = estudiante.FechaCreacion,
+                        FechaActualizacion = estudiante.FechaActualizacion
+                    }).FirstOrDefaultAsync();
             }
             catch (Exception)
             {

@@ -1,4 +1,5 @@
 ﻿using GestionUniversidad.Db;
+using GestionUniversidad.Dtos.Estudiante;
 using GestionUniversidad.Dtos.Programa;
 using GestionUniversidad.Interfaces;
 using GestionUniversidad.Models;
@@ -43,6 +44,55 @@ namespace GestionUniversidad.Services
                         RutaImagen = programa.RutaImagen!
 
                     }).ToListAsync();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+
+        public async Task<IEnumerable<GetProgramaDto>> FindPagination(int nPagina, int nMostrar)
+        {
+
+            try
+            {
+                return await context.Programa
+                    .Select(programa => new GetProgramaDto
+                    {
+                        Id = programa.Id,
+                        Nombre = programa.Nombre,
+                        Descripcion = programa.Descripcion,
+                        Duracion = programa.Duracion,
+                        Facultad = programa.Facultad!.Nombre,
+                        RutaImagen = programa.RutaImagen!
+
+                    })
+                    .OrderByDescending(programa => programa.Id)
+                    .Skip((nPagina - 1) * nMostrar)
+                    .Take(nMostrar)
+                    .ToListAsync();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task<string?> SaveImage(IFormFile archivo)
+        {
+            try
+            {
+                var uploadsPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Uploads", "Programas");
+
+                var ruta = Path.Combine(uploadsPath, archivo.FileName);
+
+                using (var stream = new FileStream(ruta, FileMode.Create))
+                {
+                    await archivo.CopyToAsync(stream);
+                }
+
+                return ruta;
             }
             catch (Exception)
             {
