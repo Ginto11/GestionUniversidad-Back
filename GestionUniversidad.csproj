@@ -4,6 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>52066b64-0a6e-4ff3-9d68-2987c79e5e04</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,6 +21,21 @@
     </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
     <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="8.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Uploads\Programas\administracion-empresas.webp" />
+    <None Include="wwwroot\Uploads\Programas\arquitectura.webp" />
+    <None Include="wwwroot\Uploads\Programas\contaduria.webp" />
+    <None Include="wwwroot\Uploads\Programas\derecho.webp" />
+    <None Include="wwwroot\Uploads\Programas\diseno-grafico.webp" />
+    <None Include="wwwroot\Uploads\Programas\educacion-infantil.webp" />
+    <None Include="wwwroot\Uploads\Programas\enfermeria.webp" />
+    <None Include="wwwroot\Uploads\Programas\ingenieria-civil.webp" />
+    <None Include="wwwroot\Uploads\Programas\ingenieria-sistemas.webp" />
+    <None Include="wwwroot\Uploads\Programas\matematicas.webp" />
+    <None Include="wwwroot\Uploads\Programas\medicina.webp" />
+    <None Include="wwwroot\Uploads\Programas\psicologia.webp" />
   </ItemGroup>
 
 </Project>
