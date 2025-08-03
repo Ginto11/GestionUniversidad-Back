@@ -1,5 +1,6 @@
 using GestionUniversidad.Authentication;
 using GestionUniversidad.Db;
+using GestionUniversidad.Interfaces;
 using GestionUniversidad.Services;
 using GestionUniversidad.Utilities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -45,6 +46,7 @@ builder.Services.AddScoped<MateriaService>();
 builder.Services.AddScoped<MatriculaService>();
 builder.Services.AddScoped<InscribirMateriaService>();
 builder.Services.AddScoped<GeneroService>();
+builder.Services.AddTransient<IEmailService, EmailService>();
 
 builder.Services.AddCors(options =>
 {

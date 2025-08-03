@@ -161,6 +161,15 @@ namespace GestionUniversidad.Controllers
                 if (programa is null)
                     return ManejoRespuestas.NotFound(id);
 
+                var rutaCarpeta = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Uploads", "Programas");
+                var rutaImagen = Path.Combine(rutaCarpeta, programa.RutaImagen!);
+
+                if (System.IO.File.Exists(rutaImagen))
+                {
+                    System.IO.File.Delete(rutaImagen);
+                }
+
+
                 await programaService.Delete(programa);
 
                 return NoContent();
