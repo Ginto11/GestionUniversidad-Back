@@ -171,8 +171,8 @@ namespace GestionUniversidad.Controllers
                 docente.Nombre = body.Nombre!;
                 docente.Apellido = body.Apellido!;
                 docente.Edad = body.Edad;
+                docente.Celular = body.Celular;
                 docente.Email = body.Email!;
-                docente.RolId = body.RolId; 
                 docente.GeneroId = body.GeneroId;
                 docente.FechaActualizacion = DateTime.Now;
                 docente.Estado = body.Estado;

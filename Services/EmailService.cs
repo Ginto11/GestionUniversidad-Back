@@ -2,7 +2,6 @@
 using GestionUniversidad.Models;
 using System.Net;
 using System.Net.Mail;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace GestionUniversidad.Services
 {
