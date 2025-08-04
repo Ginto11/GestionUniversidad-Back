@@ -12,18 +12,18 @@ Se encarga de administrar estudiantes, docentes, materias, matrículas y otros e
 
 
 ## 📋 Tabla de Contenido
-- [🎓 GestiónUniversidad-Back](#-gestiónuniversidad-back)
+- [🎓 Gestión Universidad-Back](#-gestión-universidad-back)
   - [📋 Tabla de Contenido](#-tabla-de-contenido)
   - [🗂️ Estructura del Proyecto](#️-estructura-del-proyecto)
   - [⚡️ Descripción General](#️-descripción-general)
   - [⚙️ Instalación y Ejecutable Local](#️-instalación-y-ejecutable-local)
       - [1️⃣ Clonar este repositorio](#1️⃣-clonar-este-repositorio)
-      - [2️⃣ Configurar la conexión.](#2️⃣-configurar-la-conexión)
+      - [2️⃣ Configurar el `appsettings.json`](#2️⃣-configurar-el-appsettingsjson)
       - [3️⃣ Ejecutar Scripts para Procedimientos Almacenados](#3️⃣-ejecutar-scripts-para-procedimientos-almacenados)
       - [4️⃣ Ejecutar Migraciones EF](#4️⃣-ejecutar-migraciones-ef)
       - [5️⃣ Ejecutar el Proyecto](#5️⃣-ejecutar-el-proyecto)
       - [6️⃣ Acceder a la Documentación de la API](#6️⃣-acceder-a-la-documentación-de-la-api)
-      - [🌐 Características principales](#-características-principales)
+    - [🌐 Características principales](#-características-principales)
   - [📁 Scripts principales](#-scripts-principales)
   - [🔄 Endpoints principales](#-endpoints-principales)
   - [🔐 Seguridad](#-seguridad)
@@ -64,11 +64,26 @@ Se encarga de administrar estudiantes, docentes, materias, matrículas y otros e
 git clone https://github.com/Ginto11/GestionUniversidad-Back.git
 ```
 
-#### 2️⃣ Configurar la conexión.
+#### 2️⃣ Configurar el `appsettings.json`
 ```json
 {
   "ConnectionStrings": {
     "DefaultConnection": "Server=TU_SERVIDOR;Database=TU_BASE_DATOS;User Id=TU_USER;Password=TU_PASSWORD;TrustServerCertificate=true"
+  },
+  "CONFIGURACION_EMAIL": {
+    "HOST": "smtp.tu-servidor.com",
+    "PUERTO": 587,
+    "EMAIL": "tu-correo@dominio.com",
+    "PASSWORD": "tu-contraseña-de-aplicacion"
+  },
+  "Encrypting": {
+    "IV": "vector_inicializacion_16_caracteres",
+    "Key": "clave_de_encriptacion_segura (recomendada de 32 caracteres)"
+  },
+  "Jwt": {
+    "Issuer": "https://tudominio.com",
+    "Audience": "https://tucliente.com",
+    "Key": "clave_secreta_para_tokens"
   }
 }
 ```
@@ -91,7 +106,7 @@ dotnet run
 http://localhost:<puerto>/swagger
 ```
 
-#### 🌐 Características principales
+### 🌐 Características principales
 - 👥 Estudiantes: Crear, editar, consultar y eliminar estudiantes.
 
 - 👔 Docentes: Gestión de datos de los docentes.
