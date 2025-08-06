@@ -1,4 +1,4 @@
-﻿using GestionUniversidad.Dtos.Usuario;
+﻿ using GestionUniversidad.Dtos.Usuario;
 using GestionUniversidad.Services;
 using GestionUniversidad.Utilities;
 using Microsoft.AspNetCore.Http;
@@ -34,7 +34,7 @@ namespace GestionUniversidad.Authentication
                 var usuario = await docenteService.Autenticar(usuarioLoginDto);
 
                 if (usuario == null)
-                    return ManejoRespuestas.BadRequest("Credenciales incorrectas");
+                    return ManejoRespuestas.InvalidCredentials("Credenciales incorrectas");
 
                 string nombreCompleto = usuario.Nombre + " " + usuario.Apellido;
                 string token = authService.GenerarToken(usuario.Id, nombreCompleto, usuario.Rol!.NombreRol);
@@ -68,7 +68,7 @@ namespace GestionUniversidad.Authentication
                 var usuario = await estudianteService.Autenticar(usuarioLoginDto);
 
                 if (usuario == null)
-                    return ManejoRespuestas.BadRequest("Credenciales Incorrectas");
+                    return ManejoRespuestas.InvalidCredentials("Credenciales Incorrectas");
 
                
                 string nombreCompleto = usuario.Nombre + " " + usuario.Apellido;
@@ -106,7 +106,7 @@ namespace GestionUniversidad.Authentication
                 var token = tokenHeader.Substring("Bearer ".Length);
                 var validacion = authService.ValidarToken(token);
                 if (validacion == null)
-                    return ManejoRespuestas.ValidacionTokenException("Token no valido.");
+                    return ManejoRespuestas.ValidacionTokenException("Token expirado, inicie sesión nuevamente.");
 
                 return ManejoRespuestas.ValidacionTokenExitosa("Token valido.");
 
