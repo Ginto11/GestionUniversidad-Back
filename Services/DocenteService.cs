@@ -93,6 +93,7 @@ namespace GestionUniversidad.Services
             try
             {
                 return await context.Docente
+                .Include(docente => docente.Materias)
                 .FirstOrDefaultAsync(d => d.Id == id);
             }
             catch (Exception)

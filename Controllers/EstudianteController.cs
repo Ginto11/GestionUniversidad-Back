@@ -208,6 +208,9 @@ namespace GestionUniversidad.Controllers
                 if (estudiante == null)
                     return ManejoRespuestas.NotFound(id);
 
+                if (estudiante.Estado == true)
+                    return ManejoRespuestas.ConflictOfRelation("El estudiante no se puede eliminar, tiene matriculas asociadas.");
+
                 await estudianteService.Delete(estudiante);
 
                 return NoContent();

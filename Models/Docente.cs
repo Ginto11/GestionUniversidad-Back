@@ -58,6 +58,6 @@ namespace GestionUniversidad.Models
         public Rol? Rol { get; set; }
 
         [JsonIgnore]
-        public IEnumerable<Materia>? Materias { get; }
+        public IEnumerable<Materia>? Materias { get; set;  }
     }
 }

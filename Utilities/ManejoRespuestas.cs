@@ -23,6 +23,16 @@ namespace GestionUniversidad.Utilities
             return new ObjectResult (new { codigo = 500, mensaje = mensajeServer }) { StatusCode = 500 };
         }
 
+        public static ActionResult ConflictOfRelation(string mensaje)
+        {
+            return new ObjectResult(new { codigo = 409, mensaje = mensaje }) { StatusCode = 409 };
+        }
+
+        public static ActionResult InvalidCredentials(string mensaje)
+        {
+            return new ObjectResult(new { codigo = 401, mensaje = mensaje }) { StatusCode = 401 };
+        }
+
         public static ActionResult Unauthorized()
         {
             return new ObjectResult(new { codigo = 401, mensaje = "No tienes permisos." }) { StatusCode = 401 };

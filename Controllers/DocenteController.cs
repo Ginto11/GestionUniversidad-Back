@@ -203,6 +203,10 @@ namespace GestionUniversidad.Controllers
                 if (docente == null)
                     return ManejoRespuestas.NotFound(id);
 
+                
+                if(docente.Materias != null && docente.Materias.Any())
+                    return ManejoRespuestas.ConflictOfRelation("El docente no se puede eliminar, tiene materias asociadas.");
+
                 await docenteService.Delete(docente);
 
                 return NoContent();
