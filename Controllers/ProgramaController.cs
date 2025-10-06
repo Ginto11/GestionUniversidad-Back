@@ -121,7 +121,7 @@ namespace GestionUniversidad.Controllers
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
         [Authorize(Roles = "Administrador")]
-        public async Task<ActionResult> Actualizar(PutProgramaDto body, int id)
+        public async Task<ActionResult> Actualizar([FromForm] PutProgramaDto body, int id)
         {
             try
             {
@@ -130,10 +130,18 @@ namespace GestionUniversidad.Controllers
                 if (programa is null)
                     return ManejoRespuestas.NotFound(id);
 
+                var imagen = body.Imagen;
+
+                if (imagen == null || imagen.Length == 0)
+                    return BadRequest("No se recibió la imagen.");
+
+                await programaService.SaveImage(imagen);
+
                 programa.Nombre = body.Nombre;
                 programa.Descripcion = body.Descripcion;
                 programa.Duracion = body.Duracion;
                 programa.FacultadId = body.FacultadId;
+                programa.RutaImagen = body.Imagen.FileName;
 
                 await programaService.Update(programa);
 
