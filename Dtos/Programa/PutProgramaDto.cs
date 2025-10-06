@@ -17,5 +17,6 @@ namespace GestionUniversidad.Dtos.Programa
 
         [Range(1, 100, ErrorMessage = "La facultadId tiene que ser mayor a 0.")]
         public required int FacultadId { get; set; }
+        public required IFormFile Imagen { get; set; }
     }
 }
