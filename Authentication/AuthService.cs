@@ -96,44 +96,6 @@ namespace GestionUniversidad.Authentication
         }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         public ClaimsPrincipal? ValidarToken(string token)
         {
             byte[] bytesLlaveSecreta = Encoding.UTF8.GetBytes(config["Jwt:Key"]!);
